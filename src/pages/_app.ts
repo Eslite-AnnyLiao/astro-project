@@ -1,23 +1,11 @@
 import type { App } from 'vue';
 import { createPinia } from 'pinia';
-import VueDOMPurifyHTML from 'vue-dompurify-html';
 import { SwiperSlide } from 'swiper/vue';
 import VSwiper from '@/components/global-components/v-swiper.vue';
+import { addPlugins } from '@/plugins/main';
 
 
-export default (app: App) => {
-  /**
-   * VueDOMPurifyHTML
-   */
-  app.use(VueDOMPurifyHTML, {
-    default: {
-      // whitelists - 允許的標籤和屬性
-      ADD_TAGS: ['iframe'], // 允許 iframe 標籤
-      ADD_ATTR: ['allow', 'frameborder', 'allowtransparency', 'allowfullscreen'],
-      // 允許的屬性
-    },
-  });
-
+export default async (app: App) => {
   /**
    * pinia
    */
@@ -32,4 +20,10 @@ export default (app: App) => {
    */
   app.component('Swiper', VSwiper);
   app.component('SwiperSlide', SwiperSlide);
+
+  /**
+   * Plugins
+   */
+  const pluginContext: Record<string, any> = {};
+  await addPlugins({ pluginContext, app, pinia });
 };

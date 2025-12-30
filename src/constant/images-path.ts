@@ -1,0 +1,10 @@
+export { default as productDefaultImg } from '@/static/images/product-default@3x.webp';
+export { default as productDefault200Img } from '@/static/images/product-default.webp';
+export { default as productDefaultWhiteImg } from '@/static/images/product-default-white.webp';
+export { default as productDefaultGrayF4Img } from '@/static/images/product-default-gray-f4.webp';
+export { default as productFail } from '@/static/images/product-fail.png';
+export { default as productRestricted } from '@/static/images/product-restricted.png';
+export { default as productFail628x418 } from '@/static/images/product-fail-628x418.png';
+export { default as productRestricted628x418 } from '@/static/images/product-restricted-628x418.png';
+export { default as loadingLargeImg } from '@/static/images/loading_large.gif';
+export { default as loadingImg } from '@/static/images/loading.gif';

@@ -1,0 +1,31 @@
+---
+import Counter from '@/components/Counter.vue'
+import DOMPurifyTest from '@/components/DOMPurifyTest.vue'
+import Layout from '@/layouts/Layout.astro'
+---
+
+<Layout>
+  <div class="font-sans m-0 p-8 bg-gold-500 min-h-screen text-white">
+    <main class="max-w-4xl mx-auto">
+      <h1 class="text-center text-5xl mb-4 drop-shadow-lg">Astro + Vue 示例頁面</h1>
+      <p class="text-center text-lg mb-8">這是一個結合 Astro 和 Vue 的示例頁面。下面是一個 Vue 組件：</p>
+      
+      <Counter client:load />
+      
+      <DOMPurifyTest client:load />
+      
+      <div class="bg-white/10 p-8 rounded-xl mt-12 backdrop-blur-sm">
+        <h3 class="mt-0 text-white text-2xl mb-6">技術說明</h3>
+        <ul class="list-none pl-0">
+          <li class="bg-white/10 my-2 p-3 rounded-md border-l-4 border-blue-400">使用 Astro 作為主框架</li>
+          <li class="bg-white/10 my-2 p-3 rounded-md border-l-4 border-blue-400">整合 Vue 3 組件</li>
+          <li class="bg-white/10 my-2 p-3 rounded-md border-l-4 border-blue-400">Vue 組件使用 Composition API</li>
+          <li class="bg-white/10 my-2 p-3 rounded-md border-l-4 border-blue-400">響應式計數器功能</li>
+          <li class="bg-white/10 my-2 p-3 rounded-md border-l-4 border-blue-400">使用 Tailwind CSS 樣式</li>
+          <li class="bg-white/10 my-2 p-3 rounded-md border-l-4 border-blue-400">vue-dompurify-html XSS 防護測試</li>
+        </ul>
+      </div>
+    </main>
+  </div>
+</Layout>
+

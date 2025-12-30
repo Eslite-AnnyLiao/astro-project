@@ -1,0 +1,26 @@
+/* 測試環境使用的 debug style */
+
+.debug-mode {
+  /* .w-full { outline: 1px solid red; } */
+  /* .container { outline: 1px solid green; } */
+
+  /** display outline */
+  /* * { outline: 1px dotted red }
+  * * { outline: 1px dotted green }
+  * * * { outline: 1px dotted orange }
+  * * * * { outline: 1px dotted blue }
+  * * * * * { outline: 1px solid red }
+  * * * * * * { outline: 1px solid green }
+  * * * * * * * { outline: 1px solid orange }
+  * * * * * * * * { outline: 1px solid blue } */
+
+  /** hover outline */
+  /** *:hover { outline: 2px solid #89A81E; }*/                   /* Solid Green */
+  /** * *:hover { outline: 2px solid #F34607; }*/                 /* Solid Orange */
+  /** * * *:hover { outline: 2px solid #5984C3; }*/               /* Solid Blue */
+  /** * * * *:hover { outline: 2px solid #CD1821; }*/             /* Solid Red */
+  /** * * * * *:hover { outline: 2px dotted #89A81E; }*/          /* Dotted Green */
+  /** * * * * * *:hover { outline: 2px dotted #F34607; }*/        /* Dotted Orange */
+  /** * * * * * * *:hover { outline: 2px dotted #5984C3; }*/      /* Dotted Blue */
+  /** * * * * * * * *:hover { outline: 2px dotted #CD1821; }*/    /* Dotted Red */
+}

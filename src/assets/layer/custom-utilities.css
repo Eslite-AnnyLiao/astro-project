@@ -1,0 +1,30 @@
+/* utilities 自訂樣式或調整 */
+@layer utilities {
+
+  /* 避免少數未支援 inset */
+  .ec-e-inset-0 {
+    @apply top-0 bottom-0 right-0 left-0;
+  }
+  .ec-offset-1 {
+    margin-left: 8.33333333%;
+  }
+  .ec-offset-2 {
+    margin-left: 16.66666667%;
+  }
+  .ec-offset-3 {
+    margin-left: 25%;
+  }
+  .ec-offset-4 {
+    margin-left: 33.33333333%;
+  }
+  .ec-offset-5 {
+    margin-left: 41.66666667%;
+  }
+  .ec-offset-6 {
+    margin-left: 50%;
+  }
+
+  .ec-text-muted {
+    color: rgba(33, 37, 41, 0.75);
+  }
+}

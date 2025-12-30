@@ -1,0 +1,39 @@
+/**
+  * 正確版本：
+  * mobile size (575 以下: container 100%)
+  * mobile size (576-767: container 540px)
+  * tablet size (768-991: container 768px)
+  * desktop size (992 以上)
+ */
+
+/**
+ * container width
+ */
+$container-width-xl: 1272px;
+$container-width-lg: 960px;
+$container-width-md: 768px;
+$container-width-sm: 540px;
+$container-width-default: 100%;
+
+/**
+ * common
+ */
+$bootstrap-default-padding: 15px;
+
+/**
+ * breakpoints (重複於 overwrite-variable.scss）
+ */
+$grid-breakpoints-xs: 414px;
+$grid-breakpoints-sm: 576px;
+$grid-breakpoints-md: 768px;
+$grid-breakpoints-lg: 992px;
+$grid-breakpoints-xl: 1280px;
+
+/**
+ * mobile container
+ * - 去單位
+ */
+$mobile-container-lg: 992;
+$mobile-container-md: 768;
+$mobile-container-sm: 540;
+$mobile-container-xs: 360;

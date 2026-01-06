@@ -8,7 +8,7 @@ import type {
   RetryConfig,
   LogConfig,
   AbortConfig,
-} from '@/types/asioxType';
+} from '@/types/axiosType';
 import type { PluginContext } from '@/types/plugin';
 
 /**
@@ -285,7 +285,7 @@ const globalAxios = (options?: {
   customLogConfig?: Partial<LogConfig>;
   customAbortConfig?: Partial<AbortConfig>;
   globalHeaders?: Record<string, string>;
-}): { 
+}): {
   abortManager: AbortManager;
 } => {
   // 合併配置
@@ -335,23 +335,23 @@ const globalAxios = (options?: {
   );
 
   // 返回管理器和控制函數
-  return { 
+  return {
     abortManager,
   };
 };
 
-// 創建 asiox 插件包裝器
+// 創建 axios 插件包裝器
 export default ({ app, pluginContext }: PluginContext) => {
   // 初始化 globalAxios 實例
   const axiosInstance = globalAxios();
-  
+
   // 將實例掛載到 Vue 應用的全域屬性
   if (app) {
-    app.config.globalProperties.$asiox = axiosInstance;
+    app.config.globalProperties.$axios = axiosInstance;
   }
-  
+
   // 也可以提供到插件上下文
   if (pluginContext) {
-    pluginContext.asiox = axiosInstance;
+    pluginContext.axios = axiosInstance;
   }
 };

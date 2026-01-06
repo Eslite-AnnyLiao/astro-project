@@ -70,7 +70,7 @@ openssl req -x509 -newkey rsa:2048 -keyout server.key -out server.crt -days 365 
 # 開發環境
 cp .env.development .env.local
 
-# 或根據需要修改 .env 檔案中的 VITE_API 設定
+# 或根據需要修改 .env 檔案中的 PUBLIC_API 設定
 ```
 
 ## 🧞 指令
@@ -84,7 +84,6 @@ cp .env.development .env.local
 | `pnpm dev`                | 啟動開發伺服器 `https://localhost:3000/`         |
 | `pnpm start:lab`          | Lab 環境開發模式                                 |
 | `pnpm start:stg`          | Staging 環境開發模式                             |
-| `pnpm start:uat`          | UAT 環境開發模式                                 |
 | `pnpm start:prd`          | Production 環境開發模式                          |
 
 ### 建置部署
@@ -93,7 +92,6 @@ cp .env.development .env.local
 | `pnpm build`              | 建置正式版本到 `./dist/`                         |
 | `pnpm build:lab`          | 建置 Lab 環境版本                               |
 | `pnpm build:stg`          | 建置 Staging 環境版本                           |
-| `pnpm build:uat`          | 建置 UAT 環境版本                               |
 | `pnpm build:prd`          | 建置 Production 環境版本                        |
 
 ### 預覽
@@ -105,49 +103,12 @@ cp .env.development .env.local
 | `pnpm preview:uat`        | 預覽 UAT 環境建置結果                           |
 | `pnpm preview:prd`        | 預覽 Production 環境建置結果                    |
 
-## 📦 主要功能
-
-### Asiox 插件 - 增強型 Axios
-
-本專案包含 `asiox` 插件，提供以下功能：
-
-- **多環境支援**：自動從環境變數讀取 API baseURL
-- **智能重試機制**：網路錯誤和 5xx 錯誤自動重試
-- **詳細錯誤分類**：HTTP 狀態碼分類和嚴重程度判斷
-- **請求取消**：使用 AbortController 管理請求取消
-- **錯誤日誌**：根據嚴重程度自動記錄錯誤
-- **TypeScript 完整支援**：所有功能都有完整的類型定義
-
-#### 使用範例
-
-```typescript
-import globalAxios from '@/plugins/asiox';
-
-// 基本使用 - 自動從環境變數讀取 baseURL
-const { abortManager, setBaseURL, setGlobalHeaders } = globalAxios();
-
-// 自訂配置
-const { abortManager } = globalAxios({
-  baseURL: 'https://custom-api.com',
-  globalHeaders: { 'Authorization': 'Bearer token' },
-  customRetryConfig: { maxRetries: 5, retryDelay: 2000 },
-  customLogConfig: { enabled: true, logLevel: 'DEBUG' }
-});
-
-// 動態切換 API 端點
-setBaseURL('https://new-api.com');
-setGlobalHeaders({ 'X-Custom-Header': 'value' });
-
-// 取消所有請求
-abortManager.cancelAll();
-```
-
 ## 🔧 技術架構
 
 - **框架**: Astro 5.x + Vue 3
 - **狀態管理**: Pinia
 - **樣式**: TailwindCSS + SCSS
-- **HTTP 客戶端**: Axios (增強版 asiox)
+- **HTTP 客戶端**: Axios (增強版 axios)
 - **建置工具**: Vite
 - **開發工具**: TypeScript, ESLint
 
@@ -161,7 +122,7 @@ abortManager.cancelAll();
 │   ├── components/        # Vue 元件
 │   ├── layouts/           # Astro 版面配置
 │   ├── pages/            # 頁面檔案
-│   ├── plugins/          # 插件 (asiox, head, pinia 等)
+│   ├── plugins/          # 插件 (axios, head, pinia 等)
 │   ├── stores/           # Pinia 狀態管理
 │   └── types/            # TypeScript 類型定義
 ├── .env*                 # 環境變數檔案

@@ -1,5 +1,6 @@
 // tailwind/plugins/borderStyleShorthand.js
 import plugin from 'tailwindcss/plugin';
+import type { CSSRuleObject } from 'tailwindcss/types/config';
 
 const directions = {
   all: ['top', 'right', 'bottom', 'left'],
@@ -22,12 +23,12 @@ const borderStyles = ['solid', 'dashed', 'dotted', 'double'];
  * @sample [無效] `border-r-solid-[var(--very-light-pink-two)]` => border-r border-solid border-[var(--very-light-pink-two)]
  */
 export const borderStyleShorthand = plugin(({ addUtilities, theme, e }) => {
-  const newUtilities = {};
+  const newUtilities: Record<string, CSSRuleObject> = {};
 
-  const colors = theme('colors');
+  const colors = theme('colors') as Record<string, string | Record<string, string>>;
 
-  const flattenColors = (obj, prefix = '') => {
-    const result = {};
+  const flattenColors = (obj: Record<string, string | Record<string, string>>, prefix = ''): Record<string, string> => {
+    const result: Record<string, string> = {};
     Object.entries(obj).forEach(([key, value]) => {
       if (typeof value === 'string') {
         result[`${prefix}${key}`] = value;
@@ -44,10 +45,10 @@ export const borderStyleShorthand = plugin(({ addUtilities, theme, e }) => {
     borderStyles.forEach((style) => {
       // 無色彩版本
       const className = `border-${dirKey}-${style}`;
-      const base = {};
+      const base: CSSRuleObject = {};
       sides.forEach((side) => {
-        base[`border-${side}-style`] = style;
-        base[`border-${side}-width`] = '1px';
+        (base as any)[`border-${side}-style`] = style;
+        (base as any)[`border-${side}-width`] = '1px';
       });
       newUtilities[`.${e(className)}`] = base;
 
@@ -55,7 +56,7 @@ export const borderStyleShorthand = plugin(({ addUtilities, theme, e }) => {
       Object.entries(flatColors).forEach(([colorKey, colorValue]) => {
         const colorClass = `border-${dirKey}-${style}-${colorKey}`;
         const styled = { ...base };
-        sides.forEach((side) => (styled[`border-${side}-color`] = colorValue));
+        sides.forEach((side) => ((styled as any)[`border-${side}-color`] = colorValue));
         newUtilities[`.${e(colorClass)}`] = styled;
       });
 
@@ -64,9 +65,7 @@ export const borderStyleShorthand = plugin(({ addUtilities, theme, e }) => {
     });
   });
 
-  addUtilities(newUtilities, {
-    variants: ['responsive', 'hover'],
-  });
+  addUtilities(newUtilities);
 });
 
 /** @const notoFont 原scss notoSerifFont (noto-[500], noto-[bold] ) */
@@ -119,10 +118,10 @@ export const notoFont = plugin(({ matchUtilities }) => {
  * }
  */
 export const tailwindPluginDesignTokensToCssVars = plugin(function ({ addBase, theme }) {
-  const root = {};
+  const root: Record<string, string> = {};
 
   // helper: safely assign CSS variable if value exists
-  const setVar = (name, value) => {
+  const setVar = (name: string, value: any) => {
     if (value !== undefined && value !== null) root[name] = String(value);
   };
 

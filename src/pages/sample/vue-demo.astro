@@ -1,6 +1,7 @@
 ---
 import Counter from '@/components/Counter.vue'
 import DOMPurifyTest from '@/components/DOMPurifyTest.vue'
+import CategoriesTest from '@/components/CategoriesTest.vue'
 import Layout from '@/layouts/Layout.astro'
 ---
 
@@ -14,6 +15,8 @@ import Layout from '@/layouts/Layout.astro'
       
       <DOMPurifyTest client:load />
       
+      <CategoriesTest client:load />
+      
       <div class="bg-white/10 p-8 rounded-xl mt-12 backdrop-blur-sm">
         <h3 class="mt-0 text-white text-2xl mb-6">技術說明</h3>
         <ul class="list-none pl-0">
@@ -23,6 +26,7 @@ import Layout from '@/layouts/Layout.astro'
           <li class="bg-white/10 my-2 p-3 rounded-md border-l-4 border-blue-400">響應式計數器功能</li>
           <li class="bg-white/10 my-2 p-3 rounded-md border-l-4 border-blue-400">使用 Tailwind CSS 樣式</li>
           <li class="bg-white/10 my-2 p-3 rounded-md border-l-4 border-blue-400">vue-dompurify-html XSS 防護測試</li>
+          <li class="bg-white/10 my-2 p-3 rounded-md border-l-4 border-blue-400">Categories API 測試 (asiox 插件)</li>
         </ul>
       </div>
     </main>

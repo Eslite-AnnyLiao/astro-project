@@ -9,6 +9,7 @@ import type {
   LogConfig,
   AbortConfig,
 } from '@/types/asioxType';
+import type { PluginContext } from '@/types/plugin';
 
 /**
  * 判斷錯誤類型是否為 ECONNABORTED / Network Error / timeout
@@ -279,15 +280,18 @@ const handleApiError = async (
 /**
  * 全域 axios 配置函數
  */
-const globalAxios = (
-  customRetryConfig?: Partial<RetryConfig>,
-  customLogConfig?: Partial<LogConfig>,
-  customAbortConfig?: Partial<AbortConfig>,
-): { abortManager: AbortManager } => {
+const globalAxios = (options?: {
+  customRetryConfig?: Partial<RetryConfig>;
+  customLogConfig?: Partial<LogConfig>;
+  customAbortConfig?: Partial<AbortConfig>;
+  globalHeaders?: Record<string, string>;
+}): { 
+  abortManager: AbortManager;
+} => {
   // 合併配置
-  const retryConfig: RetryConfig = { ...defaultRetryConfig, ...customRetryConfig };
-  const logConfig: LogConfig = { ...defaultLogConfig, ...customLogConfig };
-  const abortConfig: AbortConfig = { ...defaultAbortConfig, ...customAbortConfig };
+  const retryConfig: RetryConfig = { ...defaultRetryConfig, ...options?.customRetryConfig };
+  const logConfig: LogConfig = { ...defaultLogConfig, ...options?.customLogConfig };
+  const abortConfig: AbortConfig = { ...defaultAbortConfig, ...options?.customAbortConfig };
 
   // 創建管理器實例
   const abortManager = new AbortManager(abortConfig);
@@ -305,11 +309,6 @@ const globalAxios = (
     // 設定基本超時時間
     if (!request.timeout) {
       request.timeout = 30 * 1000; // 30秒
-    }
-
-    // 設定基本 headers
-    if (!request.headers['Content-Type']) {
-      request.headers['Content-Type'] = 'application/json';
     }
 
     return request;
@@ -335,8 +334,24 @@ const globalAxios = (
     },
   );
 
-  // 返回管理器以便外部控制
-  return { abortManager };
+  // 返回管理器和控制函數
+  return { 
+    abortManager,
+  };
 };
 
-export default globalAxios;
+// 創建 asiox 插件包裝器
+export default ({ app, pluginContext }: PluginContext) => {
+  // 初始化 globalAxios 實例
+  const axiosInstance = globalAxios();
+  
+  // 將實例掛載到 Vue 應用的全域屬性
+  if (app) {
+    app.config.globalProperties.$asiox = axiosInstance;
+  }
+  
+  // 也可以提供到插件上下文
+  if (pluginContext) {
+    pluginContext.asiox = axiosInstance;
+  }
+};

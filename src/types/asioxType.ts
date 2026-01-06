@@ -50,3 +50,15 @@ export interface AbortConfig {
   enabled: boolean;
   timeout?: number; // 自動取消超時時間（毫秒）
 }
+
+/**
+ * 環境類型 - 對應 Vite 的 mode
+ */
+export type Environment = 'development' | 'lab' | 'stg' | 'uat' | 'prd' | 'production' | 'snapshot' | string;
+
+/**
+ * 環境配置映射
+ */
+export interface EnvironmentConfig {
+  [key: string]: string; // 環境名稱對應 baseURL
+}

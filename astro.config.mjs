@@ -1,4 +1,5 @@
 // @ts-check
+import fs from 'fs';
 import { defineConfig } from 'astro/config';
 import path from 'path';
 import legacy from '@vitejs/plugin-legacy';
@@ -7,20 +8,47 @@ import topLevelAwait from 'vite-plugin-top-level-await';
 
 import vue from '@astrojs/vue';
 
+
+let serverOptions = {};
+try {
+  const keyPath = path.resolve(process.cwd(), 'server.key');
+  const certPath = path.resolve(process.cwd(), 'server.crt');
+  
+  serverOptions = { 
+    https: { 
+      key: fs.readFileSync(keyPath), 
+      cert: fs.readFileSync(certPath)
+    } 
+  };
+} catch (error) {
+  console.log('HTTPS certificates not found, using HTTP');
+}
+
 // https://astro.build/config
 export default defineConfig({
   integrations: [
     vue({
-      appEntrypoint: '/src/pages/_app'
-    })
+      appEntrypoint: '/src/pages/_app',
+    }),
   ],
 
   vite: {
+    server: {
+      https: serverOptions.https ? {
+        key: serverOptions.https.key,
+        cert: serverOptions.https.cert
+      } : false,
+    },
     plugins: [
       legacy({
         targets: ['defaults', 'ie >= 11', 'chrome 44', 'iOS 12'],
         // modernTarget: ['edge>=79, firefox>=67, chrome>=64, safari>=12, chromeAndroid>=64, iOS>=12'], // default 值
-        modernPolyfills: ['es.object.has-own', 'esnext.global-this', 'esnext.string.match-all', 'web.dom-collections.for-each'],
+        modernPolyfills: [
+          'es.object.has-own',
+          'esnext.global-this',
+          'esnext.string.match-all',
+          'web.dom-collections.for-each',
+        ],
         renderLegacyChunks: true,
         additionalLegacyPolyfills: ['regenerator-runtime/runtime'],
         // polyfills 相關 keyword 查閱: https://github.com/zloirock/core-js
@@ -84,8 +112,16 @@ export default defineConfig({
     },
     resolve: {
       alias: {
-        '@/': path.resolve(process.cwd(), 'src') + '/'
-      }
-    }
-  }
+        '@/': path.resolve(process.cwd(), 'src') + '/',
+      },
+    },
+  },
+  server: {
+    port: 3000,
+    // hmr: { overlay: false },
+  },
+  // localhost use `dist` folder
+  preview: {
+    port: 8080,
+  },
 });

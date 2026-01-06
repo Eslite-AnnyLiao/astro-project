@@ -4,8 +4,17 @@
   "version": "0.0.1",
   "scripts": {
     "dev": "astro dev",
+    "start:lab": "astro dev --mode=lab",
+    "start:stg": "astro dev --mode=stg",
+    "start:prd": "astro dev --mode=prd",
     "build": "astro build",
+    "build:lab": "astro build --mode=lab",
+    "build:stg": "astro build --mode=stg",
+    "build:prd": "astro build --mode=prd",
     "preview": "astro preview",
+    "preview:lab": "astro preview --mode=lab",
+    "preview:stg": "astro preview --mode=stg",
+    "preview:prd": "astro preview --mode=prd",
     "astro": "astro"
   },
   "dependencies": {
@@ -24,7 +33,7 @@
     "ua-parser-js": "^1.0.41",
     "vue": "^3.5.26",
     "vue-dompurify-html": "^5.3.0",
-    "vue-lazyload": "^3.0.0"
+    "vue3-lazyload": "^0.3.8"
   },
   "devDependencies": {
     "@types/ua-parser-js": "^0.7.39",

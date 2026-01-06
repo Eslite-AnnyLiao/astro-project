@@ -3,6 +3,7 @@ import type { PluginContext } from '@/types/plugin';
 
 export default ({ app }: PluginContext) => {
   const head = createHead();
-
+  
+  // 正確的安裝方式
   app.use(head);
 };

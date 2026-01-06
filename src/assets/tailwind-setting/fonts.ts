@@ -1,4 +1,6 @@
 import defaultTheme from 'tailwindcss/defaultTheme';
+import plugin from 'tailwindcss/plugin';
+import { NOTO_SANS_TC_CONFIG } from './shared';
 
 export const fontFamily = {
   // 中英混合
@@ -45,3 +47,22 @@ export const fontSize = {
 export const fontVariantNumeric = {
   tabular: 'tabular-nums',
 };
+
+/**
+ * Noto Sans TC 字體插件 (從 plugins.ts 移過來)
+ * 使用方式：noto-[400], noto-[bold], noto-[500] 等
+ */
+export const notoFontPlugin = plugin(({ matchUtilities }) => {
+  matchUtilities(
+    {
+      noto: (value: string) => ({
+        fontFamily: NOTO_SANS_TC_CONFIG.fontFamily,
+        fontStyle: NOTO_SANS_TC_CONFIG.fontStyle,
+        fontWeight: value,
+      }),
+    },
+    {
+      values: {},
+    },
+  );
+});

@@ -1,0 +1,43 @@
+---
+// 測試 screens plugin 是否正常運作
+import Layout from '@/layouts/Layout.astro';
+---
+
+<Layout>
+  <h1 class="text-2xl font-bold mb-4">Screens Plugin 測試</h1>
+
+  <!-- 測試基礎斷點 -->
+  <div class="mb-8">
+    <h2 class="text-xl mb-2">基礎斷點</h2>
+    <div class="hidden xs:block bg-blue-100 p-2 mb-2">xs: 顯示 (414px+)</div>
+    <div class="hidden sm:block bg-green-100 p-2 mb-2">sm: 顯示 (576px+)</div>
+    <div class="hidden md:block bg-yellow-100 p-2 mb-2">md: 顯示 (768px+)</div>
+    <div class="hidden lg:block bg-red-100 p-2 mb-2">lg: 顯示 (992px+)</div>
+    <div class="hidden xl:block bg-purple-100 p-2 mb-2">xl: 顯示 (1280px+)</div>
+    <div class="price p-2 mb-2">20000</div>
+  </div>
+
+  <!-- 測試 extend.screens 斷點 -->
+  <div class="mb-8">
+    <h2 class="text-xl mb-2">測試 extend.screens</h2>
+    <div class="block max:hidden bg-blue-200 p-2 mb-2">max: 應該在 1600px+ 時隱藏</div>
+    <div class="block max-xs:hidden bg-orange-100 p-2 mb-2">max-xs: 應該在 414px+ 時隱藏</div>
+  </div>
+
+  <!-- 測試範圍斷點 -->
+  <div class="mb-8">
+    <h2 class="text-xl mb-2">範圍斷點</h2>
+    <div class="xs-to-sm:block hidden bg-cyan-100 p-2 mb-2">xs-to-sm: 顯示 (414px - 575px)</div>
+    <div class="sm-to-md:block hidden bg-lime-100 p-2 mb-2">sm-to-md: 顯示 (576px - 767px)</div>
+    <div class="md-to-lg:block hidden bg-amber-100 p-2 mb-2">md-to-lg: 顯示 (768px - 991px)</div>
+  </div>
+
+  <!-- 測試特殊範圍 -->
+  <div class="mb-8">
+    <h2 class="text-xl mb-2">特殊範圍斷點</h2>
+    <div class="sm-to-lg:block hidden bg-emerald-100 p-2 mb-2">sm-to-lg: 顯示 (576px - 991px)</div>
+    <div class="xs-to-xl:block hidden bg-violet-100 p-2 mb-2">xs-to-xl: 顯示 (414px - 1279px)</div>
+  </div>
+
+  <p class="text-sm text-gray-600 mt-8">調整瀏覽器寬度來測試不同斷點的顯示效果</p>
+</Layout>

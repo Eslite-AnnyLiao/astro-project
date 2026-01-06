@@ -15,6 +15,5 @@ export const content = [
   './src/layouts/**/*.{vue,js,astro}',
   './src/stories/**/*.{js,jsx,ts,tsx}',
   './src/stories/**/*.vue',
-  './src/App.vue',
   ...blockContent,
 ];

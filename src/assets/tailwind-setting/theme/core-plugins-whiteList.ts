@@ -1,4 +1,6 @@
-export const whiteList = [
+import type { CorePluginList } from 'tailwindcss/types/generated/corePluginList';
+
+export const whiteList: CorePluginList[] = [
   'alignContent',
   'alignItems',
   'alignSelf',

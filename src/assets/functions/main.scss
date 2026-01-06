@@ -1,6 +1,0 @@
-
-@import "mobile";
-
-@function pxToRemValue($pxValue) {
-  @return #{math.div($pxValue, $baseFontSize)}rem;
-}

@@ -99,13 +99,8 @@ export default defineConfig({
       preprocessorOptions: {
         scss: {
           sourceMap: false,
-          additionalData: `
-          @use 'sass:math';
-          @import '@/assets/mixins/global-variable.scss';
-          @import '@/assets/mixins/mixins.scss';
-          @import '@/assets/functions/main.scss';
-        `,
-          // `swiper/swiper-bundle.css`,
+          // SCSS mixins 和 functions 已轉換為 Tailwind plugins
+          // additionalData: `@use 'sass:math';`,
         },
       },
       devSourcemap: true,

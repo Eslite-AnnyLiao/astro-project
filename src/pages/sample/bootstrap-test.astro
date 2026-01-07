@@ -14,7 +14,7 @@ import Layout from '@/layouts/Layout.astro';
         <div class="ec-card-body">
           <h5 class="text-xl font-bold mb-2">Card Title</h5>
           <p class="text-gray-600">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-          <button class="bg-blue-500 text-white px-4 py-2 rounded mt-3">Go somewhere</button>
+          <button class="ec-btn ec-btn-eslite-red mt-3">Go somewhere</button>
         </div>
       </div>
     </section>
@@ -73,14 +73,14 @@ import Layout from '@/layouts/Layout.astro';
           <div class="ec-modal-content">
             <div class="ec-modal-header">
               <h5 class="text-xl font-bold">Modal title</h5>
-              <button type="button" class="text-gray-500 hover:text-gray-700">&times;</button>
+              <button type="button" class="ec-btn ec-btn-link text-gray-500">&times;</button>
             </div>
             <div class="ec-modal-body">
               <p>Modal body text goes here.</p>
             </div>
             <div class="ec-modal-footer">
-              <button type="button" class="bg-gray-500 text-white px-4 py-2 rounded">Close</button>
-              <button type="button" class="bg-blue-500 text-white px-4 py-2 rounded">Save changes</button>
+              <button type="button" class="ec-btn ec-btn-secondary">Close</button>
+              <button type="button" class="ec-btn ec-btn-eslite-red">Save changes</button>
             </div>
           </div>
         </div>
@@ -308,9 +308,101 @@ import Layout from '@/layouts/Layout.astro';
             <a href="#" class="text-blue-600 hover:underline">另一個連結</a>
           </p>
           <p>
-            <button type="button" class="bg-blue-500 text-white px-3 py-1 rounded">按鈕</button>
-            <button type="button" class="bg-gray-500 text-white px-3 py-1 rounded" disabled>停用按鈕</button>
+            <button type="button" class="ec-btn ec-btn-eslite-red">按鈕</button>
+            <button type="button" class="ec-btn ec-btn-secondary" disabled>停用按鈕</button>
           </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- EC Button System 測試 -->
+    <section>
+      <h2 class="text-2xl font-semibold mb-4">EC Button System</h2>
+      <div class="max-w-4xl space-y-8">
+        
+        <!-- Basic Buttons -->
+        <div>
+          <h3 class="text-lg font-medium mb-3">基本按鈕</h3>
+          <div class="flex flex-wrap gap-3">
+            <button class="ec-btn ec-btn-black">Black</button>
+            <button class="ec-btn ec-btn-eslite-red">Eslite Red</button>
+            <button class="ec-btn ec-btn-eslite-light-brown">Light Brown</button>
+            <button class="ec-btn ec-btn-eslite-secondary">Eslite Secondary</button>
+            <button class="ec-btn ec-btn-secondary">Secondary</button>
+            <button class="ec-btn ec-btn-gold-500">Gold 500</button>
+          </div>
+        </div>
+
+        <!-- Outline Buttons -->
+        <div>
+          <h3 class="text-lg font-medium mb-3">外框按鈕</h3>
+          <div class="flex flex-wrap gap-3">
+            <button class="ec-btn ec-btn-outline-black">Outline Black</button>
+            <button class="ec-btn ec-btn-outline-eslite-red">Outline Red</button>
+            <button class="ec-btn ec-btn-outline-eslite-light-brown">Outline Brown</button>
+            <button class="ec-btn ec-btn-outline-eslite-secondary">Outline Secondary</button>
+            <button class="ec-btn ec-btn-outline-secondary">Outline Secondary</button>
+            <button class="ec-btn ec-btn-outline-gold-500">Outline Gold</button>
+          </div>
+        </div>
+
+        <!-- Gray Variants -->
+        <div>
+          <h3 class="text-lg font-medium mb-3">灰階按鈕</h3>
+          <div class="flex flex-wrap gap-3">
+            <button class="ec-btn ec-btn-m-gray-9">Medium Gray 9</button>
+            <button class="ec-btn ec-btn-m-gray-c">Medium Gray C</button>
+            <button class="ec-btn ec-btn-l-gray-f4">Light Gray F4</button>
+            <button class="ec-btn ec-btn-l-gray-e">Light Gray E</button>
+          </div>
+        </div>
+
+        <!-- Button Sizes -->
+        <div>
+          <h3 class="text-lg font-medium mb-3">按鈕尺寸</h3>
+          <div class="flex flex-wrap items-center gap-3">
+            <button class="ec-btn ec-btn-eslite-red ec-btn-lg">Large Button</button>
+            <button class="ec-btn ec-btn-eslite-red">Normal Button</button>
+            <button class="ec-btn ec-btn-eslite-red ec-btn-sm">Small Button</button>
+          </div>
+        </div>
+
+        <!-- Block Button -->
+        <div>
+          <h3 class="text-lg font-medium mb-3">區塊按鈕</h3>
+          <div class="max-w-md">
+            <button class="ec-btn ec-btn-eslite-red ec-btn-block">Block Button</button>
+          </div>
+        </div>
+
+        <!-- Link Button -->
+        <div>
+          <h3 class="text-lg font-medium mb-3">連結按鈕</h3>
+          <div class="flex flex-wrap gap-3">
+            <button class="ec-btn ec-btn-link">Link Button</button>
+            <button class="ec-btn ec-btn-link" disabled>Disabled Link</button>
+          </div>
+        </div>
+
+        <!-- Disabled States -->
+        <div>
+          <h3 class="text-lg font-medium mb-3">停用狀態</h3>
+          <div class="flex flex-wrap gap-3">
+            <button class="ec-btn ec-btn-black" disabled>Disabled Black</button>
+            <button class="ec-btn ec-btn-eslite-red" disabled>Disabled Red</button>
+            <button class="ec-btn ec-btn-outline-eslite-red" disabled>Disabled Outline</button>
+            <button class="ec-btn ec-btn-secondary" disabled>Disabled Secondary</button>
+          </div>
+        </div>
+
+        <!-- Button Groups -->
+        <div>
+          <h3 class="text-lg font-medium mb-3">按鈕群組</h3>
+          <div class="flex">
+            <button class="ec-btn ec-btn-outline-eslite-red rounded-r-none">Left</button>
+            <button class="ec-btn ec-btn-outline-eslite-red rounded-none border-l-0">Middle</button>
+            <button class="ec-btn ec-btn-outline-eslite-red rounded-l-none border-l-0">Right</button>
+          </div>
         </div>
       </div>
     </section>

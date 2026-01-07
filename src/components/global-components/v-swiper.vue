@@ -1,5 +1,5 @@
 <template>
-  <vue-swiper ref="swiperRef" :modules="swiperModules" v-bind="{ ...composedSwiperOption }" class="swiperDefault">
+  <vue-swiper ref="swiperRef" :modules="swiperModules" v-bind="{ ...composedSwiperOption }" class="w-full">
     <slot></slot>
     <swiper-slide v-for="(emptyItem, index) in emptySlides" :key="`empty-${index}`"></swiper-slide>
     <div slot="container-end">
@@ -11,7 +11,8 @@
   </vue-swiper>
 </template>
 
-<script>
+<script setup>
+import { computed, ref } from 'vue';
 import { repeat } from 'ramda';
 import { Navigation, Pagination, Autoplay, Thumbs, FreeMode } from 'swiper/modules';
 import { Swiper as VueSwiper } from 'swiper/vue';
@@ -24,51 +25,47 @@ import 'swiper/css/thumbs';
 
 const globalOption = getSwiperGlobalOptions();
 
-const props = {
+const props = defineProps({
   // v-on 除外(ex. @slideChange)
   options: { type: Object, default: () => ({}) },
   totalSlides: { type: Number, default: 0 },
   needThumbs: { type: Boolean, default: false },
+});
+
+const swiperRef = ref(null);
+
+const composedSwiperOption = computed(() => ({ ...globalOption, ...props.options }));
+const emptySlides = computed(() => {
+  if (!props.options.loopFillGroupWithBlank) return [];
+  if (!props.totalSlides) return [];
+  const groupLength = props.options.slidesPerView;
+  const lastGroupLength = props.totalSlides % groupLength;
+  if (!lastGroupLength) return [];
+  return repeat('', groupLength - lastGroupLength);
+});
+const swiperModules = computed(() => {
+  const base = [Navigation, Pagination, Autoplay];
+  if (props.options.freeMode) base.push(FreeMode);
+  if (props.needThumbs) base.push(Thumbs);
+  return base;
+});
+
+const getSwiperInstance = () => {
+  // swiper element
+  // return this.$refs.swiperRef?.swiper || null;
+  // swiper/vue
+  console.log(swiperRef.value?.$el.swiper);
+  return swiperRef.value?.$el.swiper || null;
+};
+const initSwiperInstance = () => {
+  // (swiper element) 當 init = false，手動執行 initialize，產出 swiperRef.swiper
+  // this.$refs.swiperRef.initialize();
+  // (swiper/vue) init
+  swiperRef.value?.$el.swiper.init();
 };
 
-export default {
+defineOptions({
   name: 'VSwiper',
-  components: { VueSwiper },
   inheritAttrs: true,
-  props,
-  computed: {
-    composedSwiperOption() {
-      return { ...globalOption, ...this.options };
-    },
-    // 實現 swiperjs v9.4.1 的 loopFillGroupWithBlank
-    emptySlides() {
-      if (!this.options.loopFillGroupWithBlank) return [];
-      if (!this.totalSlides) return [];
-      const groupLength = this.options.slidesPerView;
-      const lastGroupLength = this.totalSlides % groupLength;
-      if (!lastGroupLength) return [];
-      return repeat('', groupLength - lastGroupLength);
-    },
-    swiperModules() {
-      const base = [Navigation, Pagination, Autoplay];
-      if (this.options.freeMode) base.push(FreeMode);
-      if (this.needThumbs) base.push(Thumbs);
-      return base;
-    },
-  },
-  methods: {
-    getSwiperInstance() {
-      // swiper element
-      // return this.$refs.swiperRef?.swiper || null;
-      // swiper/vue
-      return this.$refs.swiperRef?.$el.swiper || null;
-    },
-    initSwiperInstance() {
-      // (swiper element) 當 init = false，手動執行 initialize，產出 swiperRef.swiper
-      // this.$refs.swiperRef.initialize();
-      // (swiper/vue) init
-      this.$refs.swiperRef.$el.swiper.init();
-    },
-  },
-};
+});
 </script>

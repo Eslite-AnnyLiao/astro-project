@@ -1,9 +1,15 @@
 /* src/assets/tailwind.css */
-/*components*/
+
+/* Base layer (包含 reset 和 bootstrap base) */
+@import "layer/reset.css";
+@import "layer/bootstrap-base.css";
+@import "layer/bootstrap4-custom-controls.css";
 @import "layer/custom-components.css";
-/*utilities*/
 @import "layer/custom-utilities.css";
 @import "layer/overwrite-style-utilities.css";
 @tailwind base;
+/* Components layer */
 @tailwind components;
+/* Utilities layer */
 @tailwind utilities;
+

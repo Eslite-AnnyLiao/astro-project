@@ -17,6 +17,8 @@ import { remPlugin } from './rem-utils';
 import { mobileAdaptPlugin } from './mobile-adapt';
 import { designTokensPlugin } from './design-tokens';
 import { screensGeneratorPlugin } from './screens-generator';
+import { bootstrapComponentsPlugin } from './bootstrap-components';
+import { borderRadiusUtilsPlugin } from './border-radius-utils';
 
 /**
  * 所有插件的陣列導出
@@ -34,4 +36,6 @@ export const allPlugins = [
   hoverLinkPlugin,
   commonUtilsPlugin,
   screensGeneratorPlugin,
+  bootstrapComponentsPlugin,
+  borderRadiusUtilsPlugin,
 ];

@@ -2,16 +2,16 @@
   <div class="ec-container">
     <div class="ec-row py-4">
       <p>一頁顯示7筆並單次走一筆</p>
-      <swiper ref="SevenAndOneSwiper" :options="swiperSevenAndOneOptions" class="banner-row">
-        <swiper-slide v-for="(item, index) in items.slice(0, 8)" :key="index" class="!flex !items-center">
+      <VSwiper ref="SevenAndOneSwiper" :options="swiperSevenAndOneOptions" class="banner-row">
+        <SwiperSlide v-for="(item, index) in items.slice(0, 8)" :key="index" class="!flex !items-center">
           <div :style="`background-color: ${item.color};`">
             <p class="text-center text-gray-100">{{ item.sort }}</p>
             <img v-lazy="item.image" :alt="item.name" class="!h-auto" />
           </div>
-        </swiper-slide>
+        </SwiperSlide>
         <div class="swiper-button-prev"></div>
         <div class="swiper-button-next"></div>
-      </swiper>
+      </VSwiper>
     </div>
 
     <!-- <div class="ec-row py-4"><swiper :slides-per-view="1.4" :centered-slides="true" :loop="true" :space-between="16" @slideChange="updateSlideScale"><swiper-slide v-for="(slide, index) in items" :key="index" class="custom-slide"><a :href="slide.link" :title="slide.name"><img class="swiper-lazy" :src="slide.image" :alt="slide.name" /></a></swiper-slide><div class="swiper-button-next"></div><div class="swiper-button-prev"></div></swiper></div> -->
@@ -23,17 +23,26 @@
   </div>
 </template>
 
-<script setup>
-import { ref, computed, onMounted, nextTick } from 'vue';
+<script setup lang="ts">
+import { ref, computed, onMounted, nextTick, type Ref } from 'vue';
+import VSwiper from '@/components/global-components/v-swiper.vue';
+import { swiperPresets, commonBreakpoints } from '@/composables/useSwiper';
+import { useSwiperInstance } from '@/composables/useSwiperInstance';
+import type { SwiperBreakpoint } from '@/types/swiper'; // TypeScript ref 定義
+const swiperTopRef: Ref<InstanceType<typeof VSwiper> | null> = ref(null);
+const swiperThumbsRef: Ref<InstanceType<typeof VSwiper> | null> = ref(null);
 
-// const swiperBothSidesRef = ref(null);
-// const swiperDefaultRef = ref(null);
-// const swiper2024IndexBigSlideRef = ref(null);
-// const swiperRWDRef = ref(null);
-const swiperTopRef = ref(null);
-const swiperThumbsRef = ref(null);
+// 定義資料項目介面
+interface SwiperItem {
+  id: number;
+  image: string;
+  name: string;
+  link: string;
+  sort: number;
+  color: string;
+}
 
-const items = ref([
+const items: Ref<SwiperItem[]> = ref([
   { id: 12284, image: '/src/static/fake-images/1044x475-1.jpg', name: '你好', link: '#1', sort: 1, color: 'orangered' },
   {
     id: 12072,
@@ -173,45 +182,24 @@ const items = ref([
   },
 ]);
 
-/** @const {object} baseSwiperOptions base swiper options */
-const baseSwiperOptions = { init: true, loop: true, autoplay: true, slidesPerView: 1, spaceBetween: 0 };
+// 使用統一的響應式斷點
+const breakpoints: SwiperBreakpoint = commonBreakpoints;
 
-/** @const {object} breakpoints swiper breakpoints option */
-const breakpoints = {
-  576: { slidesPerView: 3 },
-  768: { slidesPerView: 3 },
-  992: { slidesPerView: 4 },
-  1280: { slidesPerView: 5 },
-};
+// 使用 Swiper 實例管理
+const { handleReady, handleClick, handleSlideChange, updateThumbs } = useSwiperInstance();
 
-const swiperSevenAndOneOptions = {
-  slidesPerView: 7,
-  spaceBetween: 12,
-  slidesPerGroup: 1,
-  loop: true,
-  // loopedSlides: 8, // 需要與 slide 數量一致
-  // centeredSlides: true, // 集中顯示
-  navigation: { nextEl: '.swiper-button-next', prevEl: '.swiper-button-prev' },
-};
+// 使用預設配置 - 多列顯示
+const swiperSevenAndOneOptions: Record<string, any> = swiperPresets.multiRow(7, 12);
 
-const swiperDefaultOptions = ref({
-  ...baseSwiperOptions,
-  navigation: { nextEl: '.swiperDefault .swiper-button-next', prevEl: '.swiperDefault .swiper-button-prev' },
-  pagination: { el: '.swiperDefault .swiper-pagination', clickable: true },
-});
+// 使用預設配置 - 響應式輪播
+const swiperDefaultOptions: Ref<Record<string, any>> = ref(swiperPresets.responsive('swiperDefault'));
 
-const swiperBothSidesOptions = ref({
-  // ...baseSwiperOptions,
-  loop: true,
-  spaceBetween: 4,
-  centeredSlides: true,
-  slidesPerView: 1.2,
-  navigation: { nextEl: '.swiperBothSides .swiper-button-next', prevEl: '.swiperBothSides .swiper-button-prev' },
-});
+// 使用預設配置 - 居中顯示
+const swiperBothSidesOptions: Ref<Record<string, any>> = ref(swiperPresets.centered('swiperBothSides'));
 
 /** @const {object} swiper2024IndexBigSlide 首頁改版大輪播 */
-const swiper2024IndexBigSlide = ref({
-  ...baseSwiperOptions,
+const swiper2024IndexBigSlide: Ref<Record<string, any>> = ref({
+  ...swiperPresets.basic(),
   autoplay: false,
   slidesPerView: 'auto',
   navigation: {
@@ -222,25 +210,13 @@ const swiper2024IndexBigSlide = ref({
 });
 
 /** @const {object} swiperRWDOptions 輪播 RWD */
-const swiperRWDOptions = ref({
-  ...baseSwiperOptions,
-  breakpoints,
-  navigation: { nextEl: '.swiperRWD .swiper-button-next', prevEl: '.swiperRWD .swiper-button-prev' },
-  pagination: { el: '.swiperRWD .swiper-pagination', clickable: true },
-});
+const swiperRWDOptions: Ref<Record<string, any>> = ref(swiperPresets.responsive('swiperRWD'));
 
 /** @const {object} swiperOptionTop 上下組合輪播（上半部 - 主畫面） */
-const swiperOptionTop = ref({
-  loop: true,
-  loopedSlides: 5,
-  spaceBetween: 10,
-  navigation: { nextEl: '.swiperTop .swiper-button-next', prevEl: '.swiperTop .swiper-button-prev' },
-});
+const swiperOptionTop: Ref<Record<string, any>> = ref(swiperPresets.thumbs('swiperTop'));
 /** @const {object} swiperOptionThumbs 上下組合輪播（下半部 - 頁籤部分） */
-const swiperOptionThumbs = ref({
-  loop: true,
-  loopedSlides: 5,
-  spaceBetween: 10,
+const swiperOptionThumbs: Ref<Record<string, any>> = ref({
+  ...swiperPresets.thumbs('swiperThumbs'),
   centeredSlides: true,
   slidesPerView: 'auto',
   touchRatio: 0.2,
@@ -248,29 +224,24 @@ const swiperOptionThumbs = ref({
   breakpoints,
 });
 
-const handleSwiperReadied = () => console.log(`ready`);
-const handleClickSlide = () => console.log(`click-slide`);
-const updateSlideScale = (swiper) => {
-  swiper.slides.forEach((slide) => (slide.style.transform = 'scale(0.9)'));
-  swiper.slides[swiper.activeIndex].style.transform = 'scale(1)';
-};
+// 使用統一的事件處理函數
+const handleSwiperReadied = (): void => handleReady();
+const handleClickSlide = (): void => handleClick();
+const updateSlideScale = (swiper: any): void => handleSlideChange(swiper);
 
-onMounted(() => {
-  nextTick(() => {
+onMounted((): void => {
+  nextTick((): void => {
     if (swiperTopRef.value !== null) {
-      window.swiperTop = swiperTopRef.value;
-      // set thumbs
-      swiperTopRef.value.$el.swiper.thumbs.swiper = swiperThumbsRef.value.$el.swiper;
-      swiperTopRef.value.$el.swiper.thumbs.init();
+      (window as any).swiperTop = swiperTopRef.value;
+      // 使用統一的縮略圖關聯方法
+      updateThumbs(swiperTopRef, swiperThumbsRef);
     }
   });
 });
-</script>
 
-<script>
-export default {
+defineOptions({
   name: 'SampleSwiper',
-};
+});
 </script>
 
 <style scoped>
@@ -310,7 +281,7 @@ export default {
   .swiper-button-next:not(.swiper-button-hidden) {
     display: block;
   }
-  
+
   .swiper-slide img {
     width: 100%;
     height: 100%;

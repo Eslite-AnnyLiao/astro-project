@@ -1,7 +1,7 @@
 import type { App } from 'vue';
 import { createPinia } from 'pinia';
 import { SwiperSlide } from 'swiper/vue';
-import VSwiper from '@/components/global-components/v-swiper.vue';
+// import VSwiper from '@/components/global-components/v-swiper.vue';
 import { addPlugins } from '@/plugins/main';
 
 
@@ -18,7 +18,7 @@ export default async (app: App) => {
   /**
    * Swiper
    */
-  app.component('Swiper', VSwiper);
+  // app.component('Swiper', VSwiper);
   app.component('SwiperSlide', SwiperSlide);
 
   /**

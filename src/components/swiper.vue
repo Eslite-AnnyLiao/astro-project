@@ -2,7 +2,7 @@
   <div class="ec-container">
     <div class="ec-row py-4">
       <p>一頁顯示7筆並單次走一筆</p>
-      <VSwiper ref="SevenAndOneSwiper" :options="swiperSevenAndOneOptions" class="banner-row">
+      <VSwiper ref="SevenAndOneSwiper" preset="multiRow" :preset-options="{ slidesPerView: 7, spaceBetween: 12 }" class="banner-row">
         <SwiperSlide v-for="(item, index) in items.slice(0, 8)" :key="index" class="!flex !items-center">
           <div :style="`background-color: ${item.color};`">
             <p class="text-center text-gray-100">{{ item.sort }}</p>
@@ -26,11 +26,9 @@
 <script setup lang="ts">
 import { ref, onMounted, nextTick, type Ref } from 'vue';
 import VSwiper from '@/components/global-components/v-swiper.vue';
-import { swiperPresets, commonBreakpoints } from '@/composables/swiper/useSwiper';
 import { useSwiperInstance } from '@/composables/swiper/useSwiperInstance';
-import type { SwiperBreakpoint } from '@/types/swiper'; // TypeScript ref 定義
-const swiperTopRef: Ref<InstanceType<typeof VSwiper> | null> = ref(null);
-const swiperThumbsRef: Ref<InstanceType<typeof VSwiper> | null> = ref(null);
+import type { VSwiperExposed } from '@/types/swiper';
+const swiperTopRef: Ref<typeof VSwiper | VSwiperExposed | null> = ref(null);
 
 // 定義資料項目介面
 interface SwiperItem {
@@ -182,59 +180,29 @@ const items: Ref<SwiperItem[]> = ref([
   },
 ]);
 
-// 使用統一的響應式斷點
-const breakpoints: SwiperBreakpoint = commonBreakpoints;
-
 // 使用 Swiper 實例管理
-const { handleReady, handleClick, handleSlideChange, updateThumbs } = useSwiperInstance();
-
-// 使用預設配置 - 多列顯示
-const swiperSevenAndOneOptions: Record<string, any> = swiperPresets.multiRow(7, 12);
-
-// 使用預設配置 - 響應式輪播
-const swiperDefaultOptions: Ref<Record<string, any>> = ref(swiperPresets.responsive('swiperDefault'));
-
-// 使用預設配置 - 居中顯示
-const swiperBothSidesOptions: Ref<Record<string, any>> = ref(swiperPresets.centered('swiperBothSides'));
-
-/** @const {object} swiper2024IndexBigSlide 首頁改版大輪播 */
-const swiper2024IndexBigSlide: Ref<Record<string, any>> = ref({
-  ...swiperPresets.basic(),
-  autoplay: false,
-  slidesPerView: 'auto',
-  navigation: {
-    nextEl: '.swiper2024IndexBigSlide .swiper-button-next',
-    prevEl: '.swiper2024IndexBigSlide .swiper-button-prev',
-  },
-  pagination: { el: '.swiper2024IndexBigSlide .swiper-pagination', clickable: true },
-});
-
-/** @const {object} swiperRWDOptions 輪播 RWD */
-const swiperRWDOptions: Ref<Record<string, any>> = ref(swiperPresets.responsive('swiperRWD'));
-
-/** @const {object} swiperOptionTop 上下組合輪播（上半部 - 主畫面） */
-const swiperOptionTop: Ref<Record<string, any>> = ref(swiperPresets.thumbs('swiperTop'));
-/** @const {object} swiperOptionThumbs 上下組合輪播（下半部 - 頁籤部分） */
-const swiperOptionThumbs: Ref<Record<string, any>> = ref({
-  ...swiperPresets.thumbs('swiperThumbs'),
-  centeredSlides: true,
-  slidesPerView: 'auto',
-  touchRatio: 0.2,
-  slideToClickedSlide: true,
-  breakpoints,
-});
-
-// 使用統一的事件處理函數
-const handleSwiperReadied = (): void => handleReady();
-const handleClickSlide = (): void => handleClick();
-const updateSlideScale = (swiper: any): void => handleSlideChange?.(swiper);
+const { handleReady, handleClick, handleSlideChange } = useSwiperInstance();
 
 onMounted((): void => {
   nextTick((): void => {
-    if (swiperTopRef.value !== null) {
-      (window as any).swiperTop = swiperTopRef.value;
-      // 使用統一的縮略圖關聯方法
-      updateThumbs?.(swiperTopRef, swiperThumbsRef);
+    // 測試 defineExpose 導出的功能
+    if (swiperTopRef.value) {
+      console.log('VSwiper 導出的 swiperPresets:', swiperTopRef.value.swiperPresets);
+      console.log('VSwiper 導出的 commonBreakpoints:', swiperTopRef.value.commonBreakpoints);
+      console.log('VSwiper 導出的 swiperRef:', swiperTopRef.value.swiperRef);
+      
+      // 測試使用內建的預設配置
+      const basicConfig = swiperTopRef.value.swiperPresets.basic();
+      console.log('基礎配置:', basicConfig);
+      
+      const multiRowConfig = swiperTopRef.value.swiperPresets.multiRow(5, 16);
+      console.log('多列配置:', multiRowConfig);
+      
+      // 測試斷點配置
+      console.log('斷點配置:', swiperTopRef.value.commonBreakpoints);
+      
+      // 綁定到 window 供測試
+      (window as any).vSwiperInstance = swiperTopRef.value;
     }
   });
 });

@@ -36,3 +36,15 @@ export interface SwiperInstanceMethods {
   handleSlideChange?: (swiper: any) => void;
   updateThumbs?: (mainSwiperRef: Ref<any>, thumbsSwiperRef: Ref<any>) => void;
 }
+
+export interface VSwiperExposed {
+  swiperPresets: {
+    basic: () => any;
+    responsive: (containerClass?: string) => any;
+    centered: (containerClass?: string) => any;
+    thumbs: (containerClass?: string) => any;
+    multiRow: (slidesPerView: number, spaceBetween?: number) => any;
+  };
+  commonBreakpoints: SwiperBreakpoint;
+  swiperRef: Ref<any>;
+}

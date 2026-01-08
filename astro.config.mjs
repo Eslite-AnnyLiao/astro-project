@@ -96,13 +96,7 @@ export default defineConfig({
       }),
     ],
     css: {
-      preprocessorOptions: {
-        scss: {
-          sourceMap: false,
-          // SCSS mixins 和 functions 已轉換為 Tailwind plugins
-          // additionalData: `@use 'sass:math';`,
-        },
-      },
+      preprocessorOptions: {},
       devSourcemap: true,
     },
     resolve: {

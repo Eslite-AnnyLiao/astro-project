@@ -244,7 +244,7 @@ defineOptions({
   overflow: hidden;
 }
 
-@media (min-width: 768px) {
+@screen md {
   .swiper-button-prev:not(.swiper-button-hidden),
   .swiper-button-next:not(.swiper-button-hidden) {
     display: block;

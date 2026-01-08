@@ -17,7 +17,7 @@
     <!-- <div class="ec-row py-4"><swiper :slides-per-view="1.4" :centered-slides="true" :loop="true" :space-between="16" @slideChange="updateSlideScale"><swiper-slide v-for="(slide, index) in items" :key="index" class="custom-slide"><a :href="slide.link" :title="slide.name"><img class="swiper-lazy" :src="slide.image" :alt="slide.name" /></a></swiper-slide><div class="swiper-button-next"></div><div class="swiper-button-prev"></div></swiper></div> -->
     <!-- <div class="ec-row py-4"><div class="ec-col-12">左右顯示部分</div><div class="ec-col-12 py-4"><swiper ref="swiperBothSidesRef" class="swiper swiperBothSides" :options="swiperBothSidesOptions" @slideChange="updateSlideScale"><swiper-slide v-for="(item, index) in items" :key="index" class="swiper-slide custom-slide"><a :href="item.link" :title="item.name"><img class="swiper-lazy" :src="item.image" :alt="item.name" /></a></swiper-slide><div slot="button-prev" class="swiper-button-prev"></div><div slot="button-next" class="swiper-button-next"></div><div slot="pagination" class="swiper-pagination swiper-pagination-bullets"></div></swiper></div></div> -->
     <!-- <div class="ec-row py-4"><div class="ec-col-12">Default</div><div class="ec-col-12 py-4"><swiper ref="swiperDefaultRef" class="swiper swiperDefault" :options="swiperDefaultOptions" @ready="handleSwiperReadied" @clickSlide="handleClickSlide"><swiper-slide v-for="(item, index) in items" :key="`type-1-${index}`" class="swiper-slide"><a :href="item.link" :title="item.name"><img class="swiper-lazy" :data-src="item.image" :alt="item.name" /><div class="swiper-lazy-preloader"></div></a></swiper-slide><template #button-prev><div class="swiper-button-prev"></div></template><template #button-next><div class="swiper-button-next"></div></template><template #pagination><div class="swiper-pagination swiper-pagination-bullets"></div></template></swiper></div></div> -->
-    <!-- <div class="ec-row py-4"><div class="ec-col-12">2024 index big slide setting</div><div class="m-0 p-0 index-page-slide"><swiper ref="swiper2024IndexBigSlideRef" class="swiper swiper2024IndexBigSlide" :options="swiper2024IndexBigSlide" @ready="handleSwiperReadied" @clickSlide="handleClickSlide"><swiper-slide v-for="(item, index) in items" :key="`type-2-${index}`" class="swiper-slide"><div class="big-slide-box"><a :href="item.link" :title="item.name" class="big-banner"><img class="swiper-lazy" :src="item.image" :alt="item.name" /></a><div class="hot-product-box"><div class="title">主打商品</div><div v-for="(item, index) in [0, 1, 2]" :key="index" class="product-list"><div class="ec-card grid grid-cols-2 grid-row-3 gap-x-1 gap-y-2"><div class="card-title col-span-2">KANESU舞冷麥麵</div><div class="card-image-box row-span-2"><img :src="`/src/static/fake-images/big-slide-box-right-product-1.jpg`" class="card-image" /></div><div class="card-description">漢美馳 健康無油爆米花機</div><div class="card-dollar">$1,124,70</div></div></div></div></div></swiper-slide><div slot="button-prev" class="swiper-button-prev"></div><div slot="button-next" class="swiper-button-next"></div><div slot="pagination" class="swiper-pagination swiper-pagination-bullets"></div></swiper></div></div> -->
+    <!-- <div class="ec-row py-4"><div class="ec-col-12">2024 index big slide setting</div><div class="m-0 p-0 index-page-slide"><swiper ref="swiper2024IndexBigSlideRef" class="swiper swiper2024IndexBigSlide" :options="swiper2024IndexBigSlide" @ready="handleSwiperReadied" @clickSlide="handleClickSlide"><swiper-slide v-for="(item, index) in items" :key="`type-2-${index}`" class="swiper-slide"><div class="big-slide-box"><a :href="item.link" :title="item.name" class="big-banner"><img class="swiper-lazy" :src="item.image" :alt="item.name" /></a><div class="hot-product-box"><div class="title">主打商品</div><div v-for="(item, index) in [0, 1, 2]" :key="index" class="product-list"><div class="ec-card grid grid-cols-2 grid-row-3 gap-x-1 gap-y-2"><div class="card-title col-span-2">KANESU舞冷麥麵</div><div class="card-image-box row-span-2"><img :src="`/fake-images/big-slide-box-right-product-1.jpg`" class="card-image" /></div><div class="card-description">漢美馳 健康無油爆米花機</div><div class="card-dollar">$1,124,70</div></div></div></div></div></swiper-slide><div slot="button-prev" class="swiper-button-prev"></div><div slot="button-next" class="swiper-button-next"></div><div slot="pagination" class="swiper-pagination swiper-pagination-bullets"></div></swiper></div></div> -->
     <!-- <div class="ec-row py-4"><div class="ec-col-12">RWD setting</div><div class="ec-col-12 py-4"><swiper ref="swiperRWDRef" class="swiper swiperRWD" :options="swiperRWDOptions" @ready="handleSwiperReadied" @clickSlide="handleClickSlide"><swiper-slide v-for="(item, index) in items" :key="`type-2-${index}`" class="swiper-slide"><a :href="item.link" :title="item.name"><img class="swiper-lazy" :src="item.image" :alt="item.name" /></a></swiper-slide><div slot="button-prev" class="swiper-button-prev"></div><div slot="button-next" class="swiper-button-next"></div><div slot="pagination" class="swiper-pagination swiper-pagination-bullets"></div></swiper></div></div> -->
     <!-- <div class="ec-row py-4"><div class="ec-col-12">gallery thumbs</div><div class="ec-col-12 py-4"><swiper ref="swiperTopRef" class="swiper swiperTop" :options="swiperOptionTop" thumbs-swiper=".swiperThumbs" :need-thumbs="true"><swiper-slide v-for="(item, index) in items" :key="`type-viewer-${index}`" class="swiper-slide"><a :href="item.link" :title="item.name"><img :src="item.image" :alt="item.name" /></a></swiper-slide><template #button-next><div class="swiper-button-next swiper-button-white"></div></template><template #button-prev><div class="swiper-button-prev swiper-button-white"></div></template></swiper><swiper ref="swiperThumbsRef" class="swiper swiperThumbs" :options="swiperOptionThumbs" :need-thumbs="true"><swiper-slide v-for="(item, index) in items" :key="`type-thumb-${index}`" class="swiper-slide"><img :src="item.image" :alt="item.name" /></swiper-slide></swiper></div></div> -->
   </div>
@@ -41,10 +41,10 @@ interface SwiperItem {
 }
 
 const items: Ref<SwiperItem[]> = ref([
-  { id: 12284, image: '/src/static/fake-images/1044x475-1.jpg', name: '你好', link: '#1', sort: 1, color: 'orangered' },
+  { id: 12284, image: '/fake-images/1044x475-1.jpg', name: '你好', link: '#1', sort: 1, color: 'orangered' },
   {
     id: 12072,
-    image: '/src/static/fake-images/1044x475-2.jpg',
+    image: '/fake-images/1044x475-2.jpg',
     name: '故事大飯店',
     link: '#2',
     sort: 2,
@@ -52,7 +52,7 @@ const items: Ref<SwiperItem[]> = ref([
   },
   {
     id: 12197,
-    image: '/src/static/fake-images/1044x475-3.jpg',
+    image: '/fake-images/1044x475-3.jpg',
     name: '森山大道',
     link: '#3',
     sort: 3,
@@ -60,7 +60,7 @@ const items: Ref<SwiperItem[]> = ref([
   },
   {
     id: 12073,
-    image: '/src/static/fake-images/1044x475-4.jpg',
+    image: '/fake-images/1044x475-4.jpg',
     name: '希望之線',
     link: '#4',
     sort: 4,
@@ -68,7 +68,7 @@ const items: Ref<SwiperItem[]> = ref([
   },
   {
     id: 12198,
-    image: '/src/static/fake-images/1044x475-5.jpg',
+    image: '/fake-images/1044x475-5.jpg',
     name: '貓奴書單',
     link: '#5',
     sort: 5,
@@ -76,7 +76,7 @@ const items: Ref<SwiperItem[]> = ref([
   },
   {
     id: 11938,
-    image: '/src/static/fake-images/1044x475-6.jpg',
+    image: '/fake-images/1044x475-6.jpg',
     name: '丹麥一年',
     link: '#6',
     sort: 6,
@@ -84,7 +84,7 @@ const items: Ref<SwiperItem[]> = ref([
   },
   {
     id: 12074,
-    image: '/src/static/fake-images/1044x475-7.jpg',
+    image: '/fake-images/1044x475-7.jpg',
     name: '丹麥一年',
     link: '#7',
     sort: 7,
@@ -92,7 +92,7 @@ const items: Ref<SwiperItem[]> = ref([
   },
   {
     id: 11939,
-    image: '/src/static/fake-images/1044x475-8.jpg',
+    image: '/fake-images/1044x475-8.jpg',
     name: '貓奴書單',
     link: '#8',
     sort: 8,
@@ -100,7 +100,7 @@ const items: Ref<SwiperItem[]> = ref([
   },
   {
     id: 12075,
-    image: '/src/static/fake-images/1044x475-9.jpg',
+    image: '/fake-images/1044x475-9.jpg',
     name: '日常生活美術館',
     link: '#9',
     sort: 9,
@@ -108,7 +108,7 @@ const items: Ref<SwiperItem[]> = ref([
   },
   {
     id: 12284,
-    image: '/src/static/fake-images/1044x475-1.jpg',
+    image: '/fake-images/1044x475-1.jpg',
     name: '你好2',
     link: '#10',
     sort: 10,
@@ -116,7 +116,7 @@ const items: Ref<SwiperItem[]> = ref([
   },
   {
     id: 12072,
-    image: '/src/static/fake-images/1044x475-2.jpg',
+    image: '/fake-images/1044x475-2.jpg',
     name: '故事大飯店2',
     link: '#11',
     sort: 11,
@@ -124,7 +124,7 @@ const items: Ref<SwiperItem[]> = ref([
   },
   {
     id: 12197,
-    image: '/src/static/fake-images/1044x475-3.jpg',
+    image: '/fake-images/1044x475-3.jpg',
     name: '森山大道2',
     link: '#12',
     sort: 12,
@@ -132,7 +132,7 @@ const items: Ref<SwiperItem[]> = ref([
   },
   {
     id: 12073,
-    image: '/src/static/fake-images/1044x475-4.jpg',
+    image: '/fake-images/1044x475-4.jpg',
     name: '希望之線2',
     link: '#13',
     sort: 13,
@@ -140,7 +140,7 @@ const items: Ref<SwiperItem[]> = ref([
   },
   {
     id: 12198,
-    image: '/src/static/fake-images/1044x475-5.jpg',
+    image: '/fake-images/1044x475-5.jpg',
     name: '貓奴書單2',
     link: '#14',
     sort: 14,
@@ -148,7 +148,7 @@ const items: Ref<SwiperItem[]> = ref([
   },
   {
     id: 11938,
-    image: '/src/static/fake-images/1044x475-6.jpg',
+    image: '/fake-images/1044x475-6.jpg',
     name: '丹麥一年2',
     link: '#15',
     sort: 15,
@@ -156,7 +156,7 @@ const items: Ref<SwiperItem[]> = ref([
   },
   {
     id: 12074,
-    image: '/src/static/fake-images/1044x475-7.jpg',
+    image: '/fake-images/1044x475-7.jpg',
     name: '丹麥一年2',
     link: '#16',
     sort: 16,
@@ -164,7 +164,7 @@ const items: Ref<SwiperItem[]> = ref([
   },
   {
     id: 11939,
-    image: '/src/static/fake-images/1044x475-8.jpg',
+    image: '/fake-images/1044x475-8.jpg',
     name: '貓奴書單2',
     link: '#17',
     sort: 17,
@@ -172,7 +172,7 @@ const items: Ref<SwiperItem[]> = ref([
   },
   {
     id: 12075,
-    image: '/src/static/fake-images/1044x475-9.jpg',
+    image: '/fake-images/1044x475-9.jpg',
     name: '日常生活美術館2',
     link: '#18',
     sort: 18,
@@ -257,7 +257,7 @@ defineOptions({
 }
 
 .swiper-lazy-preloader {
-  background-image: url('../static/images/loading_large.gif');
+  background-image: url('/images/loading_large.gif');
   background-size: contain;
   background-position: center;
   background-repeat: no-repeat;
@@ -318,7 +318,7 @@ defineOptions({
   top: 0;
   right: 0;
   /* background: linear-gradient(rgba(255, 255, 255, 0) 0 40px, rgba(255, 255, 255, 1) 120px 100%),
-    url('/src/static/images/bg/big-slide-box-right-products-bg-stripe.svg') no-repeat top left, theme('colors.white'); */
+    url('/images/bg/big-slide-box-right-products-bg-stripe.svg') no-repeat top left, theme('colors.white'); */
   outline: 1px solid rgb(4, 235, 0);
 }
 

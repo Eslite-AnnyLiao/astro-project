@@ -26,12 +26,12 @@ try {
 
 // https://astro.build/config
 export default defineConfig({
+  output: 'static',
   integrations: [
     vue({
       appEntrypoint: '/src/pages/_app',
     }),
   ],
-
   vite: {
     server: {
       https: serverOptions.https ? {
@@ -108,9 +108,5 @@ export default defineConfig({
   server: {
     port: 3000,
     // hmr: { overlay: false },
-  },
-  // localhost use `dist` folder
-  preview: {
-    port: 8080,
   },
 });

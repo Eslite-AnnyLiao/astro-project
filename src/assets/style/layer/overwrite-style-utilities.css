@@ -313,17 +313,17 @@
     border-radius: 4px;
     background-color: var(--gray-80);
     /* logo 184x48 */
-    background-image: url('@/static/images/logo_gray.png');
+    background-image: url('/images/logo_gray.png');
     background-repeat: no-repeat;
     background-position: center;
 
     /** logo 122x32 */
     &.mode-122x32 {
-      background-image: url('@/static/images/logo-eslite-online-122-32.png');
+      background-image: url('/images/logo-eslite-online-122-32.png');
     }
     /** logo 260x150 */
     &.mode-260x150 {
-      background-image: url('@/static/images/logo-eslite-online-260-150.png');
+      background-image: url('/images/logo-eslite-online-260-150.png');
     }
   }
 

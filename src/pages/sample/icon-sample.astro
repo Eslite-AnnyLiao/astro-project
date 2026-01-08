@@ -1,0 +1,343 @@
+---
+import Layout from '@/layouts/Layout.astro';
+import Icon from '@/components/global-components/Icon.vue';
+
+// 需要多個 path 的圖標配置
+const multiPathIcons: Record<string, number> = {
+  'icon-Case-Round-Minimalistic': 2,
+  'icon-Hand-Shake': 3,
+  'icon-Lock-Password': 5,
+  'icon-People-Nearby': 3,
+  'icon-Point-On-Map': 2,
+  'icon-Settings': 2,
+  'icon-Siren-Rounded': 7,
+  'icon-Star-Fall': 4,
+  'icon-graphic_favorites': 6,
+  'icon-svg-book-shield-link': 7,
+  'icon-svg-nav-account': 6,
+  'icon-svg-nav-bill': 3,
+  'icon-svg-nav-book': 4,
+  'icon-svg-nav-buy': 4,
+  'icon-svg-nav-coin': 2,
+  'icon-svg-nav-ebook': 7,
+  'icon-svg-nav-game': 4,
+  'icon-svg-nav-hand': 5,
+  'icon-svg-nav-membership': 4,
+  'icon-svg-nav-newsletter': 3,
+  'icon-svg-nav-notification': 3,
+  'icon-svg-nav-point': 2,
+  'icon-svg-nav-save': 2,
+  'icon-svg-nav-service': 7,
+  'icon-svg-nav-ticket': 4,
+  'icon-solid-bookmark-check': 2,
+  'icon-alert-alarm-circle': 2,
+  'icon-alert-warning-circle-dark-64': 2,
+  'icon-alert-warning-circle-light-72': 2,
+  'icon-button-close-circle-light': 2,
+  'icon-icon-cart-circle-gray': 2,
+  'icon-icon-check-circle-green': 2,
+  'icon-gold-info': 8,
+  'icon-dollar': 4,
+  'icon-adultonly': 4,
+  'icon-list-active': 7,
+  'icon-order-fail': 2,
+  'icon-order-success': 2,
+  'icon-rank1': 4,
+  'icon-rank2': 4,
+  'icon-rank3': 4,
+  'icon-sample-gray': 5,
+  'icon-sq-active': 5
+};
+
+// 從 icomoon.css 中提取所有圖標名稱
+const icons = [
+  'icon-Book-Open',
+  'icon-Book-Close',
+  'icon-Case-Round-Minimalistic',
+  'icon-Hand-Shake',
+  'icon-Lock-Password',
+  'icon-People-Nearby',
+  'icon-Point-On-Map',
+  'icon-Settings',
+  'icon-Siren-Rounded',
+  'icon-Star-Fall',
+  'icon-arrow-down',
+  'icon-arrow-up',
+  'icon-chevron-up',
+  'icon-minus',
+  'icon-plus',
+  'icon-svg-alarm-remove',
+  'icon-svg-warning',
+  'icon-frame-gold',
+  'icon-frame-white',
+  'icon-graphic_favorites',
+  'icon-history',
+  'icon-outline-cart',
+  'icon-svg-book-shield-link',
+  'icon-svg-nav-account',
+  'icon-svg-nav-bill',
+  'icon-svg-nav-book',
+  'icon-svg-nav-buy',
+  'icon-svg-nav-coin',
+  'icon-svg-nav-ebook',
+  'icon-svg-nav-game',
+  'icon-svg-nav-hand',
+  'icon-svg-nav-membership',
+  'icon-svg-nav-newsletter',
+  'icon-svg-nav-notification',
+  'icon-svg-nav-point',
+  'icon-svg-nav-save',
+  'icon-svg-nav-service',
+  'icon-svg-nav-ticket',
+  'icon-solid-bookmark-check',
+  'icon-icon-check',
+  'icon-alert-alarm-circle',
+  'icon-alert-warning-circle-dark-64',
+  'icon-alert-warning-circle-light-72',
+  'icon-button-zoom-in',
+  'icon-star',
+  'icon-icon-heart-outline',
+  'icon-icon-heart',
+  'icon-send',
+  'icon-lab',
+  'icon-svg-arrow-up-down',
+  'icon-svg-list',
+  'icon-svg-square',
+  'icon-button-close-circle-light',
+  'icon-button-heart-outline',
+  'icon-button-trash-outline',
+  'icon-icon-arrow-down',
+  'icon-icon-cart-circle-gray',
+  'icon-icon-check-circle-green',
+  'icon-icon-info-circle-outline',
+  'icon-copy',
+  'icon-gold-info',
+  'icon-more-regular',
+  'icon-appliances-solid',
+  'icon-appliances',
+  'icon-outdoor-solid',
+  'icon-outdoor',
+  'icon-skincare-solid',
+  'icon-skincare',
+  'icon-shelfright',
+  'icon-shelfhome',
+  'icon-trends',
+  'icon-searchhistory',
+  'icon-hotdeal',
+  'icon-todayrecommend',
+  'icon-brandlist',
+  'icon-cbook',
+  'icon-fbook',
+  'icon-kbook',
+  'icon-fashion',
+  'icon-lifestyle',
+  'icon-food',
+  'icon-brand',
+  'icon-video',
+  'icon-stationery',
+  'icon-fbook-solid',
+  'icon-stationery-solid',
+  'icon-video-solid',
+  'icon-cbook-solid',
+  'icon-fashion-solid',
+  'icon-brand-solid',
+  'icon-food-solid',
+  'icon-lifestyle-solid',
+  'icon-kbook-solid',
+  'icon-order-solid',
+  'icon-arrow-up-solid',
+  'icon-chevron-circle-down-solid',
+  'icon-fa-times',
+  'icon-fa-caret-left',
+  'icon-fa-sort-up',
+  'icon-fa-chevron-left',
+  'icon-fa-sort-down',
+  'icon-fa-chevron-right',
+  'icon-fa-bars',
+  'icon-fa-caret-down',
+  'icon-fa-times-circle',
+  'icon-fa-dot-circle',
+  'icon-fa-dot-circle-solid',
+  'icon-fa-caret-right',
+  'icon-fa-circle',
+  'icon-fa-check-circle',
+  'icon-fa-sort',
+  'icon-fa-play',
+  'icon-fa-angle-right',
+  'icon-fa-angle-up',
+  'icon-fa-angle-down',
+  'icon-fa-heart-solid',
+  'icon-fa-heart',
+  'icon-fa-facebook',
+  'icon-fa-plus',
+  'icon-fa-minus',
+  'icon-fa-shopping-cart',
+  'icon-fa-user-circle',
+  'icon-fa-search',
+  'icon-dollar',
+  'icon-doublearrow',
+  'icon-coupon',
+  'icon-eslite',
+  'icon-heart',
+  'icon-shopgift',
+  'icon-six',
+  'icon-adultonly',
+  'icon-cart-check',
+  'icon-chevron-down',
+  'icon-list-active',
+  'icon-list-normal',
+  'icon-notice',
+  'icon-order-fail',
+  'icon-order-success',
+  'icon-rank1',
+  'icon-rank2',
+  'icon-rank3',
+  'icon-sample-gray',
+  'icon-solid-right',
+  'icon-sq-active',
+  'icon-sq-normal',
+  'icon-error-soild',
+  'icon-check-solid'
+];
+---
+
+<Layout>
+  <div class="ec-container">
+    <div class="ec-row">
+      <div class="ec-col-12">
+        <div class="mb-4">
+          <h1 class="h3 text-dark mb-3">Icomoon 圖標樣本</h1>
+          <p class="text-muted">共 {icons.length} 個圖標</p>
+        </div>
+
+        <!-- 搜尋框 -->
+        <div class="mb-4">
+          <input 
+            type="text" 
+            id="iconSearch" 
+            placeholder="搜尋圖標名稱..."
+            class="ec-form-control" 
+            style="max-width: 400px;"
+          />
+        </div>
+      </div>
+    </div>
+
+    <!-- 圖標網格 -->
+    <div class="grid grid-cols-2 gap-2" id="iconGrid">
+      {icons.map((iconName) => (
+          <div class="icon-item ec-card text-center p-2 icon-card">
+            <div class="ec-card-body p-2 flex items-center justify-center gap-2">
+              <!-- 圖標顯示 -->
+              <Icon 
+                name={iconName.replace('icon-', '')} 
+                size="xl" 
+                pathCount={multiPathIcons[iconName] || 1}
+              />
+              
+              <!-- 圖標名稱 -->
+              <small class="text-muted text-break">{iconName.replace('icon-', '')}</small>
+              
+              <!-- 複製按鈕 -->
+              <button 
+                class="copy-btn ec-btn ec-btn-sm ec-btn-outline-secondary"
+                data-icon={iconName}
+              >
+                複製
+              </button>
+            </div>
+          </div>
+      ))}
+    </div>
+
+    <!-- 使用說明 -->
+    <div class="ec-row mt-4">
+      <div class="ec-col-12">
+        <div class="ec-card">
+          <div class="ec-card-body">
+            <h2 class="h5 mb-3">使用方法</h2>
+            <div class="small text-muted">
+              <p><strong>HTML (一般):</strong> <code class="bg-light px-2 py-1 rounded">&lt;i class="icon-name"&gt;&lt;/i&gt;</code></p>
+              <p><strong>HTML (多 path):</strong> <code class="bg-light px-2 py-1 rounded">&lt;i class="icon-name"&gt;&lt;span class="path1"&gt;&lt;/span&gt;&lt;span class="path2"&gt;&lt;/span&gt;&lt;/i&gt;</code></p>
+              <p><strong>Vue:</strong> <code class="bg-light px-2 py-1 rounded">&lt;i :class="'icon-name'"&gt;&lt;/i&gt;</code></p>
+              <p class="text-info"><strong>注意:</strong> 部分圖標需要多個 path 結構才能正確顯示</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    </div>
+</Layout>
+
+<script>
+// 搜尋功能
+const searchInput = document.getElementById('iconSearch') as HTMLInputElement;
+const iconItems = document.querySelectorAll('.icon-item');
+
+searchInput?.addEventListener('input', (e) => {
+  const searchTerm = (e.target as HTMLInputElement).value.toLowerCase();
+  
+  iconItems.forEach((item) => {
+    const iconName = item.querySelector('small')?.textContent?.toLowerCase() || '';
+    const shouldShow = iconName.includes(searchTerm);
+    
+    if (shouldShow) {
+      (item as HTMLElement).style.display = '';
+    } else {
+      (item as HTMLElement).style.display = 'none';
+    }
+  });
+});
+
+// 複製功能
+document.addEventListener('click', (e) => {
+  if ((e.target as HTMLElement).classList.contains('copy-btn')) {
+    const iconName = (e.target as HTMLElement).dataset.icon;
+    if (iconName) {
+      navigator.clipboard.writeText(`<i class="${iconName}"></i>`).then(() => {
+        const btn = e.target as HTMLElement;
+        const originalText = btn.textContent;
+        btn.textContent = '已複製!';
+        btn.classList.add('ec-btn-eslite-red');
+        
+        setTimeout(() => {
+          btn.textContent = originalText;
+          btn.classList.remove('ec-btn-eslite-red');
+        }, 1000);
+      });
+    }
+  }
+});
+</script>
+
+<style scoped>
+code {
+  font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+}
+
+.icon-display {
+  font-size: 2rem;
+}
+
+.icon-card {
+  transition: box-shadow 0.15s ease-in-out;
+  cursor: pointer;
+}
+
+.icon-card:hover {
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15) !important;
+}
+
+.icon-card:hover .icon-display {
+  color: #0d6efd !important;
+}
+
+.copy-btn {
+  opacity: 0;
+  transition: opacity 0.15s ease-in-out;
+}
+
+.icon-card:hover .copy-btn {
+  opacity: 1;
+}
+</style>

@@ -26,12 +26,12 @@ try {
 
 // https://astro.build/config
 export default defineConfig({
+  output: 'static',
   integrations: [
     vue({
       appEntrypoint: '/src/pages/_app',
     }),
   ],
-
   vite: {
     server: {
       https: serverOptions.https ? {
@@ -96,13 +96,7 @@ export default defineConfig({
       }),
     ],
     css: {
-      preprocessorOptions: {
-        scss: {
-          sourceMap: false,
-          // SCSS mixins 和 functions 已轉換為 Tailwind plugins
-          // additionalData: `@use 'sass:math';`,
-        },
-      },
+      preprocessorOptions: {},
       devSourcemap: true,
     },
     resolve: {
@@ -114,9 +108,5 @@ export default defineConfig({
   server: {
     port: 3000,
     // hmr: { overlay: false },
-  },
-  // localhost use `dist` folder
-  preview: {
-    port: 8080,
   },
 });

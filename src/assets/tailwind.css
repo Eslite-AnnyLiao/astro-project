@@ -1,9 +1,0 @@
-/* src/assets/tailwind.css */
-/*components*/
-@import "layer/custom-components.css";
-/*utilities*/
-@import "layer/custom-utilities.css";
-@import "layer/overwrite-style-utilities.css";
-@tailwind base;
-@tailwind components;
-@tailwind utilities;

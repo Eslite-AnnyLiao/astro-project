@@ -6,7 +6,7 @@ import { pxToRem } from '../shared';
 export const spacing = {
   // 常用間距值
   '10px': pxToRem(10),
-  '15px': pxToRem(15), // 已存在於 config
+  '15': pxToRem(15), // 已存在於 config
   '30px': pxToRem(30),
   '60px': pxToRem(60),
 };

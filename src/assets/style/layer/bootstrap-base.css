@@ -1,0 +1,312 @@
+/* Bootstrap Base Styles (完整轉換自 bootstrap-base/reboot.css) */
+
+@layer base {
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+
+  body {
+    @apply font-sans-ch m-0 text-base font-normal leading-6 text-gray-800 bg-white;
+    -webkit-text-size-adjust: 100%;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  }
+
+  /* Content grouping */
+  hr {
+    @apply my-4 border-0 opacity-100;
+    color: inherit;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+  }
+
+  /* 所有標題的共用樣式 */
+  h1, .h1,
+  h2, .h2,
+  h3, .h3,
+  h4, .h4,
+  h5, .h5,
+  h6, .h6 {
+    @apply mt-0 mb-2 font-medium;
+    color: inherit;
+    line-height: 1.2;
+  }
+
+  /* 各級標題的特定大小 (使用自定義 fontSize) */
+  h1, .h1 { @apply text-h1; }
+  h2, .h2 { @apply text-h2; }
+  h3, .h3 { @apply text-h3; }
+  h4, .h4 { @apply text-h4; }
+  h5, .h5 { @apply text-h5; }
+  h6, .h6 { @apply text-h6; }
+
+  /* Abbreviations */
+  abbr[title] {
+    @apply underline cursor-help;
+    text-decoration: underline dotted;
+    text-decoration-skip-ink: none;
+  }
+
+  address {
+    @apply mb-4;
+    font-style: normal;
+    line-height: inherit;
+  }
+
+  /* Reset margins on paragraphs */
+  p {
+    @apply mt-0 mb-4;
+  }
+
+  /* Lists */
+  ol,
+  ul {
+    @apply pl-0;
+  }
+
+  ol,
+  ul,
+  dl {
+    @apply mt-0 mb-4;
+  }
+
+  ol ol,
+  ul ul,
+  ol ul,
+  ul ol {
+    @apply mb-0;
+  }
+
+  /* Blockquote */
+  blockquote {
+    @apply m-0 mb-4;
+  }
+
+  /* Strong */
+  b,
+  strong {
+    font-weight: bolder;
+  }
+
+  /* Small */
+  small {
+    @apply text-small;
+  }
+
+  /* Links */
+  a {
+    text-decoration: none;
+    background-color: transparent;
+  }
+
+  a:hover {
+    @apply underline;
+  }
+
+  a:not([href]):not([class]) {
+    color: inherit;
+    text-decoration: none;
+    
+    &:hover {
+      color: inherit;
+      text-decoration: none;
+    }
+  }
+
+  /* Code blocks */
+  pre {
+    @apply block mt-0 mb-4 overflow-auto;
+    font-size: 0.875em;
+
+    code {
+      font-size: inherit;
+      color: inherit;
+      word-break: normal;
+    }
+  }
+
+  code {
+    font-size: 0.875em;
+    word-wrap: break-word;
+
+    a > & {
+      color: inherit;
+    }
+  }
+
+  /* Figures */
+  figure {
+    @apply m-0 mb-4;
+  }
+
+  /* Images and content */
+  img,
+  svg {
+    @apply align-middle;
+  }
+
+  /* Tables */
+  table {
+    @apply border-collapse border-spacing-0;
+    caption-side: bottom;
+  }
+
+  /* Forms */
+  label {
+    @apply inline-block mb-2;
+  }
+
+  /* Remove the default border-radius that macOS Chrome adds */
+  button {
+    @apply rounded-none;
+  }
+
+  button:focus {
+    @apply outline-none;
+    box-shadow: none;
+  }
+
+  /* Explicitly remove focus outline in Chromium when it shouldn't be visible */
+  button:focus:not(:focus-visible) {
+    @apply outline-none;
+  }
+
+  /* Remove the margin in Firefox and Safari */
+  input,
+  button,
+  select,
+  optgroup,
+  textarea {
+    @apply m-0;
+    font-family: inherit;
+    font-size: inherit;
+    line-height: inherit;
+  }
+
+  /* Remove the inheritance of text transform in Firefox */
+  button,
+  select {
+    text-transform: none;
+  }
+
+  /* Set the cursor for non-button buttons */
+  [role="button"] {
+    @apply cursor-pointer;
+  }
+
+  select {
+    word-wrap: normal;
+
+    &:disabled {
+      @apply opacity-100;
+    }
+  }
+
+  /* Remove the dropdown arrow only from text type inputs built with datalists in Chrome */
+  [list]:not([type="date"]):not([type="datetime-local"]):not([type="month"]):not([type="week"]):not([type="time"])::-webkit-calendar-picker-indicator {
+    display: none !important;
+  }
+
+  /* Correct the inability to style clickable types in iOS and Safari */
+  button,
+  [type="button"],
+  [type="reset"],
+  [type="submit"] {
+    -webkit-appearance: button;
+
+    &:not(:disabled) {
+      @apply cursor-pointer;
+    }
+  }
+
+  /* Remove inner border and padding from Firefox */
+  ::-moz-focus-inner {
+    @apply p-0;
+    border-style: none;
+  }
+
+  /* Textareas should really only resize vertically */
+  textarea {
+    resize: vertical;
+  }
+
+  /* Reset fieldsets to behave more like a standard block element */
+  fieldset {
+    @apply min-w-0 p-0 m-0 border-0;
+  }
+
+  /* Fix legend behavior */
+  legend {
+    @apply w-full p-0 mb-2;
+    float: left;
+    font-size: calc(1.275rem + 0.3vw);
+    line-height: inherit;
+
+    + * {
+      clear: left;
+    }
+  }
+
+  /* Fix height of inputs with datetime types */
+  ::-webkit-datetime-edit-fields-wrapper,
+  ::-webkit-datetime-edit-text,
+  ::-webkit-datetime-edit-minute,
+  ::-webkit-datetime-edit-hour-field,
+  ::-webkit-datetime-edit-day-field,
+  ::-webkit-datetime-edit-month-field,
+  ::-webkit-datetime-edit-year-field {
+    @apply p-0;
+  }
+
+  ::-webkit-inner-spin-button {
+    height: auto;
+  }
+
+  /* Fix search inputs in iOS */
+  [type="search"] {
+    -webkit-appearance: textfield;
+    outline-offset: -2px;
+  }
+
+  /* Remove the inner padding in Chrome and Safari on macOS */
+  ::-webkit-search-decoration {
+    -webkit-appearance: none;
+  }
+
+  /* Remove padding around color pickers in webkit browsers */
+  ::-webkit-color-swatch-wrapper {
+    @apply p-0;
+  }
+
+  /* Inherit font family and line height for file input buttons */
+  ::file-selector-button {
+    font: inherit;
+    -webkit-appearance: button;
+  }
+
+  /* Correct element displays */
+  output {
+    @apply inline-block;
+  }
+
+  /* Remove border from iframe */
+  iframe {
+    @apply border-0;
+  }
+
+  /* Summary */
+  summary {
+    @apply cursor-pointer;
+    display: list-item;
+  }
+
+  /* Progress - Add the correct vertical alignment */
+  progress {
+    @apply align-baseline;
+  }
+
+  /* Always hide an element with the hidden HTML attribute */
+  [hidden] {
+    display: none !important;
+  }
+}

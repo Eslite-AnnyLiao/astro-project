@@ -1,11 +1,11 @@
 import type { Config } from 'tailwindcss';
-import defaultColors from './src/assets/tailwind-setting/theme/colors';
-import { fontFamily, fontSize, fontVariantNumeric, notoFontPlugin } from './src/assets/tailwind-setting/fonts';
-import { whiteList } from './src/assets/tailwind-setting/theme/core-plugins-whiteList';
-import { content } from './src/assets/tailwind-setting/content';
-import { allPlugins } from './src/assets/tailwind-setting/plugins';
-import { spacing } from './src/assets/tailwind-setting/extend/spacing';
-import { zIndex } from './src/assets/tailwind-setting/extend/z-index';
+import defaultColors from './src/assets/style/tailwind-setting/theme/colors';
+import { fontFamily, fontSize, fontVariantNumeric, notoFontPlugin } from './src/assets/style/tailwind-setting/fonts';
+import { whiteList } from './src/assets/style/tailwind-setting/theme/core-plugins-whiteList';
+import { content } from './src/assets/style/tailwind-setting/content';
+import { allPlugins } from './src/assets/style/tailwind-setting/plugins';
+import { spacing } from './src/assets/style/tailwind-setting/extend/spacing';
+import { zIndex } from './src/assets/style/tailwind-setting/extend/z-index';
 // import { generateGrid } from './src/helper/tailwind';
 
 const config: Config = {

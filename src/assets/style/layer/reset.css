@@ -19,7 +19,12 @@
   applet,
   object,
   iframe,
-  h1, h2, h3, h4, h5, h6,
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
   p,
   blockquote,
   pre,
@@ -50,8 +55,12 @@
   u,
   i,
   center,
-  dl, dt, dd,
-  ol, ul, li,
+  dl,
+  dt,
+  dd,
+  ol,
+  ul,
+  li,
   fieldset,
   form,
   label,
@@ -61,7 +70,9 @@
   tbody,
   tfoot,
   thead,
-  tr, th, td,
+  tr,
+  th,
+  td,
   article,
   aside,
   canvas,
@@ -148,5 +159,12 @@
   select {
     @apply rounded-none border-0;
     background: none;
+  }
+
+  /* 參考 https://developers.google.com/recaptcha/docs/faq#id-like-to-hide-the-recaptcha-badge.-what-is-allowed */
+  /* hide recaptcha badge */
+  /* remember to add recaptchaNote (from @/constant/recaptcha.js) in the user flow */
+  .grecaptcha-badge {
+    visibility: hidden;
   }
 }

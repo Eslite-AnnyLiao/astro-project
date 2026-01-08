@@ -2,21 +2,27 @@
   <vue-swiper ref="swiperRef" :modules="swiperModules" v-bind="{ ...composedSwiperOption }" class="w-full">
     <slot></slot>
     <swiper-slide v-for="(emptyItem, index) in emptySlides" :key="`empty-${index}`"></swiper-slide>
-    <div slot="container-end">
+    <template #container-end>
       <slot name="button-prev"></slot>
       <slot name="button-next"></slot>
       <slot name="pagination"></slot>
       <slot name="scrollbar"></slot>
-    </div>
+    </template>
   </vue-swiper>
 </template>
 
+<script lang="ts">
+export default {
+  name: 'VSwiper',
+  inheritAttrs: false,
+};
+</script>
 <script setup lang="ts">
 import { repeat } from 'ramda';
 import { computed, ref, type Ref, type ComputedRef } from 'vue';
 import { Navigation, Pagination, Autoplay, Thumbs, FreeMode } from 'swiper/modules';
 import { Swiper as VueSwiper } from 'swiper/vue';
-import { createSwiperConfig } from '@/composables/useSwiper';
+import { createSwiperConfig } from '@/composables/swiper/useSwiper';
 import type { SwiperConfigOptions } from '@/types/swiper';
 import 'swiper/css';
 import 'swiper/css/navigation';
@@ -64,10 +70,5 @@ const swiperModules: ComputedRef<any[]> = computed(() => {
   if (props.options?.freeMode) base.push(FreeMode);
   if (props.needThumbs) base.push(Thumbs);
   return base;
-});
-
-defineOptions({
-  name: 'VSwiper',
-  inheritAttrs: true,
 });
 </script>

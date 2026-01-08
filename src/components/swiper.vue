@@ -24,10 +24,10 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, onMounted, nextTick, type Ref } from 'vue';
+import { ref, onMounted, nextTick, type Ref } from 'vue';
 import VSwiper from '@/components/global-components/v-swiper.vue';
-import { swiperPresets, commonBreakpoints } from '@/composables/useSwiper';
-import { useSwiperInstance } from '@/composables/useSwiperInstance';
+import { swiperPresets, commonBreakpoints } from '@/composables/swiper/useSwiper';
+import { useSwiperInstance } from '@/composables/swiper/useSwiperInstance';
 import type { SwiperBreakpoint } from '@/types/swiper'; // TypeScript ref 定義
 const swiperTopRef: Ref<InstanceType<typeof VSwiper> | null> = ref(null);
 const swiperThumbsRef: Ref<InstanceType<typeof VSwiper> | null> = ref(null);
@@ -227,14 +227,14 @@ const swiperOptionThumbs: Ref<Record<string, any>> = ref({
 // 使用統一的事件處理函數
 const handleSwiperReadied = (): void => handleReady();
 const handleClickSlide = (): void => handleClick();
-const updateSlideScale = (swiper: any): void => handleSlideChange(swiper);
+const updateSlideScale = (swiper: any): void => handleSlideChange?.(swiper);
 
 onMounted((): void => {
   nextTick((): void => {
     if (swiperTopRef.value !== null) {
       (window as any).swiperTop = swiperTopRef.value;
       // 使用統一的縮略圖關聯方法
-      updateThumbs(swiperTopRef, swiperThumbsRef);
+      updateThumbs?.(swiperTopRef, swiperThumbsRef);
     }
   });
 });

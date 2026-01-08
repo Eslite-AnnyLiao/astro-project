@@ -4,7 +4,7 @@ import VueDOMPurifyHTML from '@/plugins/vueDomPurigyHtml';
 import vue3Lazyload from '@/plugins/vue3Lazyload';
 import '@/plugins/day';
 import axiosPlugin from '@/plugins/axios';
-import windowResize from './window-resize';
+import windowResize from './windowResize';
 
 const plugins = [axiosPlugin, head, VueDOMPurifyHTML, vue3Lazyload, windowResize];
 

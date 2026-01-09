@@ -1,5 +1,5 @@
-import screenState from '@/services/ScreenManager';
-import type { PluginContext } from '@/types/plugin';
+import screenState from '../services/ScreenManager';
+import type { PluginContext } from '../types/plugin';
 
 export default ({ app }: PluginContext) => {
   app.config.globalProperties.$screen = screenState;

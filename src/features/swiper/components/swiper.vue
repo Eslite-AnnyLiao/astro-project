@@ -25,9 +25,9 @@
 
 <script setup lang="ts">
 import { ref, onMounted, nextTick, type Ref } from 'vue';
-import VSwiper from '@/components/global-components/v-swiper.vue';
-import { useSwiperInstance } from '@/composables/swiper/useSwiperInstance';
-import type { VSwiperExposed } from '@/types/swiper';
+import VSwiper from '@/shared/components/v-swiper.vue';
+import { useSwiperInstance } from '@/shared/composables/swiper/useSwiperInstance';
+import type { VSwiperExposed } from '../types/swiper';
 const swiperTopRef: Ref<typeof VSwiper | VSwiperExposed | null> = ref(null);
 
 // 定義資料項目介面

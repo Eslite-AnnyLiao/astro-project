@@ -1,6 +1,6 @@
 import VueLazyLoad from 'vue3-lazyload';
-import type { PluginContext } from '@/types/plugin';
-import { productFail, loadingLargeImg } from '@/constant/images-path';
+import type { PluginContext } from '../types/plugin';
+import { productFail, loadingLargeImg } from '../constants/images-path';
 
 export default ({ app }: PluginContext) => {
   // function getlazyConfigByEnv() {
@@ -12,8 +12,8 @@ export default ({ app }: PluginContext) => {
 
   app.use(VueLazyLoad, {
     // vue3-lazyload 正確的配置格式
-    loading: loadingLargeImg.src,
-    error: productFail.src,
+    loading: loadingLargeImg,
+    error: productFail,
     observerOptions: {
       rootMargin: '50px',
       threshold: 0.1

@@ -1,10 +1,10 @@
-import { getSwiperGlobalOptions } from '@/helper/swiper';
-import type { 
-  SwiperConfigOptions, 
+import { getSwiperGlobalOptions } from '@/features/swiper/helpers/swiper';
+import type {
+  SwiperConfigOptions,
   SwiperBreakpoint,
   SwiperNavigationConfig,
-  SwiperPaginationConfig 
-} from '@/types/swiper';
+  SwiperPaginationConfig,
+} from '@/features/swiper/types/swiper';
 
 /**
  * 創建導航配置
@@ -13,7 +13,7 @@ export const createNavigation = (containerClass?: string): SwiperNavigationConfi
   const selector = containerClass ? `.${containerClass}` : '';
   return {
     nextEl: `${selector} .swiper-button-next`,
-    prevEl: `${selector} .swiper-button-prev`
+    prevEl: `${selector} .swiper-button-prev`,
   };
 };
 
@@ -24,7 +24,7 @@ export const createPagination = (containerClass?: string): SwiperPaginationConfi
   const selector = containerClass ? `.${containerClass}` : '';
   return {
     el: `${selector} .swiper-pagination`,
-    clickable: true
+    clickable: true,
   };
 };
 
@@ -35,7 +35,7 @@ export const commonBreakpoints: SwiperBreakpoint = {
   576: { slidesPerView: 3 },
   768: { slidesPerView: 3 },
   992: { slidesPerView: 4 },
-  1280: { slidesPerView: 5 }
+  1280: { slidesPerView: 5 },
 };
 
 /**
@@ -46,7 +46,7 @@ export const baseSwiperOptions = {
   loop: true,
   autoplay: true,
   slidesPerView: 1,
-  spaceBetween: 0
+  spaceBetween: 0,
 };
 
 /**
@@ -89,54 +89,59 @@ export const createSwiperConfig = (options: SwiperConfigOptions = {}) => {
  */
 export const swiperPresets = {
   // 基礎輪播
-  basic: () => createSwiperConfig({
-    navigation: true,
-    pagination: true,
-    custom: baseSwiperOptions
-  }),
+  basic: () =>
+    createSwiperConfig({
+      navigation: true,
+      pagination: true,
+      custom: baseSwiperOptions,
+    }),
 
   // RWD 輪播
-  responsive: (containerClass?: string) => createSwiperConfig({
-    containerClass,
-    navigation: true,
-    pagination: true,
-    custom: {
-      ...baseSwiperOptions,
-      breakpoints: commonBreakpoints
-    }
-  }),
+  responsive: (containerClass?: string) =>
+    createSwiperConfig({
+      containerClass,
+      navigation: true,
+      pagination: true,
+      custom: {
+        ...baseSwiperOptions,
+        breakpoints: commonBreakpoints,
+      },
+    }),
 
   // 居中顯示
-  centered: (containerClass?: string) => createSwiperConfig({
-    containerClass,
-    navigation: true,
-    custom: {
-      loop: true,
-      spaceBetween: 4,
-      centeredSlides: true,
-      slidesPerView: 1.2
-    }
-  }),
+  centered: (containerClass?: string) =>
+    createSwiperConfig({
+      containerClass,
+      navigation: true,
+      custom: {
+        loop: true,
+        spaceBetween: 4,
+        centeredSlides: true,
+        slidesPerView: 1.2,
+      },
+    }),
 
   // 縮略圖模式
-  thumbs: (containerClass?: string) => createSwiperConfig({
-    containerClass,
-    navigation: true,
-    custom: {
-      loop: true,
-      loopedSlides: 5,
-      spaceBetween: 10
-    }
-  }),
+  thumbs: (containerClass?: string) =>
+    createSwiperConfig({
+      containerClass,
+      navigation: true,
+      custom: {
+        loop: true,
+        loopedSlides: 5,
+        spaceBetween: 10,
+      },
+    }),
 
   // 多列顯示
-  multiRow: (slidesPerView: number, spaceBetween: number = 12) => createSwiperConfig({
-    navigation: true,
-    custom: {
-      slidesPerView,
-      spaceBetween,
-      slidesPerGroup: 1,
-      loop: true
-    }
-  })
+  multiRow: (slidesPerView: number, spaceBetween: number = 12) =>
+    createSwiperConfig({
+      navigation: true,
+      custom: {
+        slidesPerView,
+        spaceBetween,
+        slidesPerGroup: 1,
+        loop: true,
+      },
+    }),
 };

@@ -22,14 +22,14 @@ import { repeat } from 'ramda';
 import { computed, ref, type Ref, type ComputedRef } from 'vue';
 import { Navigation, Pagination, Autoplay, Thumbs, FreeMode } from 'swiper/modules';
 import { Swiper as VueSwiper } from 'swiper/vue';
-import { getSwiperGlobalOptions } from '@/helper/swiper';
+import { getSwiperGlobalOptions } from '@/features/swiper/helpers/swiper';
 import type { 
   SwiperConfigOptions, 
   SwiperBreakpoint,
   SwiperNavigationConfig,
   SwiperPaginationConfig,
   VSwiperExposed
-} from '@/types/swiper';
+} from '@/features/swiper/types/swiper';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';

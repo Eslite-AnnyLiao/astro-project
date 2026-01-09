@@ -6,7 +6,7 @@
       <button 
         @click="fetchCategory" 
         :disabled="loading"
-        class="bg-blue-500 hover:bg-blue-600 disabled:bg-blue-300 text-white px-4 py-2 rounded-md transition-colors"
+        class="ec-btn ec-btn-secondary"
       >
         {{ loading ? '載入中...' : '測試 Categories API' }}
       </button>
@@ -26,8 +26,8 @@
 
 <script setup lang="ts">
 import { ref, onMounted } from 'vue';
-import categoriesApi from '@/api/categories';
-import type { CategoryResponse } from '@/api/categories';
+import categoriesApi from '../api/categories';
+import type { CategoryResponse } from '../api/categories';
 
 const loading = ref(false);
 const data = ref<CategoryResponse | null>(null);

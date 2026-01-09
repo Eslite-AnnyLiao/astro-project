@@ -5,19 +5,19 @@
     <div class="flex gap-2 justify-center">
       <button 
         @click="decrement" 
-        class="px-4 py-2 border-0 rounded cursor-pointer font-bold transition-colors duration-200 bg-red-500 text-white hover:bg-red-700"
+        class="ec-btn ec-btn-eslite-red"
       >
         -
       </button>
       <button 
         @click="increment" 
-        class="px-4 py-2 border-0 rounded cursor-pointer font-bold transition-colors duration-200 bg-blue-500 text-white hover:bg-blue-700"
+        class="ec-btn ec-btn-secondary"
       >
         +
       </button>
       <button 
         @click="reset" 
-        class="px-4 py-2 border-0 rounded cursor-pointer font-bold transition-colors duration-200 bg-gray-500 text-white hover:bg-gray-700"
+        class="ec-btn ec-btn-outline-eslite-secondary"
       >
         重置
       </button>

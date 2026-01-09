@@ -1,9 +1,9 @@
-import type { PluginContext } from '@/types/plugin';
-import head from '@/plugins/head';
-import VueDOMPurifyHTML from '@/plugins/vueDomPurigyHtml';
-import vue3Lazyload from '@/plugins/vue3Lazyload';
-import '@/plugins/day';
-import axiosPlugin from '@/plugins/axios';
+import type { PluginContext } from '../types/plugin';
+import head from './head';
+import VueDOMPurifyHTML from './vueDomPurigyHtml';
+import vue3Lazyload from './vue3Lazyload';
+import './day';
+import axiosPlugin from './axios';
 import windowResize from './windowResize';
 
 const plugins = [axiosPlugin, head, VueDOMPurifyHTML, vue3Lazyload, windowResize];

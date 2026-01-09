@@ -1,5 +1,5 @@
 import VueDOMPurifyHTML from 'vue-dompurify-html';
-import type { PluginContext } from '@/types/plugin';
+import type { PluginContext } from '../types/plugin';
 
 export default ({ app }: PluginContext) => {
   app.use(VueDOMPurifyHTML, {

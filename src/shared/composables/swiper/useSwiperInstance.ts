@@ -1,5 +1,5 @@
 import { ref, type Ref } from 'vue';
-import type { SwiperInstanceMethods } from '@/types/swiper';
+import type { SwiperInstanceMethods } from '@/features/swiper/types/swiper';
 
 /**
  * Swiper 實例管理 composable
@@ -59,7 +59,7 @@ export const useSwiperInstance = (): SwiperInstanceMethods & {
       swiper.slides.forEach((slide: HTMLElement) => {
         slide.style.transform = 'scale(0.9)';
       });
-      
+
       // 設置當前滑塊的縮放
       if (swiper.slides[swiper.activeIndex]) {
         swiper.slides[swiper.activeIndex].style.transform = 'scale(1)';
@@ -73,7 +73,7 @@ export const useSwiperInstance = (): SwiperInstanceMethods & {
   const updateThumbs = (mainSwiperRef: Ref<any>, thumbsSwiperRef: Ref<any>) => {
     const mainInstance = mainSwiperRef.value?.$el?.swiper;
     const thumbsInstance = thumbsSwiperRef.value?.$el?.swiper;
-    
+
     if (mainInstance && thumbsInstance) {
       mainInstance.thumbs.swiper = thumbsInstance;
       mainInstance.thumbs.init();
@@ -89,6 +89,6 @@ export const useSwiperInstance = (): SwiperInstanceMethods & {
     handleReady,
     handleClick,
     handleSlideChange,
-    updateThumbs
+    updateThumbs,
   };
 };

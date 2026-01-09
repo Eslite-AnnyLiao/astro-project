@@ -10,19 +10,19 @@
     <div class="flex flex-wrap gap-2 mb-4">
       <button 
         @click="store.increment" 
-        class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+        class="ec-btn ec-btn-secondary"
       >
         +1
       </button> 
       <button 
         @click="store.decrement" 
-        class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
+        class="ec-btn ec-btn-eslite-red"
       >
         -1
       </button>
       <button 
         @click="store.reset" 
-        class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded"
+        class="ec-btn ec-btn-outline-eslite-secondary"
       >
         Reset
       </button>
@@ -37,7 +37,7 @@
       />
       <button 
         @click="updateMessage"
-        class="mt-2 bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded w-full"
+        class="mt-2 ec-btn ec-btn-gold-500 w-full"
       >
         Update Message
       </button>
@@ -56,7 +56,7 @@
 
 <script setup lang="ts">
 import { ref } from 'vue';
-import { useTestStore } from '@/stores/testStore';
+import { useTestStore } from '../stores/testStore';
 
 const store = useTestStore();
 const newMessage = ref('');

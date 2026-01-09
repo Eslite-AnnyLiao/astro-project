@@ -79,7 +79,7 @@ const disallowedTags = ref(`
   <embed src="malicious.swf"></embed>
   <form action="/submit" method="post">
     <input type="text" name="username" />
-    <button type="submit">提交</button>
+    <button type="submit" class="ec-btn ec-btn-secondary">提交</button>
   </form>
 `)
 </script>

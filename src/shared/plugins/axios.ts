@@ -8,8 +8,8 @@ import type {
   RetryConfig,
   LogConfig,
   AbortConfig,
-} from '@/types/axiosType';
-import type { PluginContext } from '@/types/plugin';
+} from '../types/axiosType';
+import type { PluginContext } from '../types/plugin';
 
 /**
  * 判斷錯誤類型是否為 ECONNABORTED / Network Error / timeout

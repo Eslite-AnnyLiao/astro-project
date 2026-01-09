@@ -1,5 +1,5 @@
 import { UAParser } from 'ua-parser-js';
-import { botKeywords } from '@/constant/ua';
+import { botKeywords } from '../constants/ua';
 
 const parser = new UAParser();
 

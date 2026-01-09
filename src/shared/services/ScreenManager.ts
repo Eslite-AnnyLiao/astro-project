@@ -1,5 +1,5 @@
 import { reactive } from 'vue';
-import { breakpoints } from '@/constant/breakpoint';
+import { breakpoints } from '../constants/breakpoint';
 
 // 檢查是否在瀏覽器環境
 const isClient = typeof window !== 'undefined';

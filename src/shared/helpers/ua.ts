@@ -5,6 +5,9 @@ const parser = new UAParser();
 
 // 針對 iPad Pro 的 user agent 特別處理
 const isSpecificiPadPro = () => {
+  // Check if running in browser environment
+  if (typeof navigator === 'undefined' || typeof window === 'undefined') return false;
+
   const ua = navigator.userAgent;
   return ua.includes('Macintosh') && 'ontouchstart' in window; // iPad Pro 使用桌面版的 user agent 但具有觸控能力
 };

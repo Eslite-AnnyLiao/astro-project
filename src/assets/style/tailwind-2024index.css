@@ -1,0 +1,30 @@
+/** @base .container 首頁改版最大寬 1280 */
+.index-container {
+  max-width: 1280px;
+  width: 1280px;
+  /* @apply mx-auto;
+  @screen xs {
+    max-width: 414px;
+  }
+  @screen sm {
+    max-width: 576px;
+  }
+  @screen md {
+    max-width: 768px;
+  }
+  @screen lg {
+    max-width: 992px;
+  }
+  @screen xl {
+    max-width: 1280px;
+  } */
+}
+
+/** 高度 20px 的空白行 */
+.nbsp {
+  @apply w-full py-2.5 mx-0;
+}
+
+.ec-outline {
+  @apply outline outline-1 outline-blue-100;
+}

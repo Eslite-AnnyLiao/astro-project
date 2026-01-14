@@ -1,6 +1,9 @@
 // import { checkIsImageSnapshotTest } from '@/helper/check-image-snapshot-test';
 
-const isTouchDevice = () => typeof window !== 'undefined' && ('ontouchstart' in window || navigator.maxTouchPoints > 0 || navigator.maxTouchPoints > 0);
+const isTouchDevice = () =>
+  typeof window !== 'undefined' &&
+  typeof navigator !== 'undefined' &&
+  ('ontouchstart' in window || navigator.maxTouchPoints > 0);
 
 export function getSwiperGlobalOptions() {
   return isTouchDevice()

@@ -1,6 +1,10 @@
 ---
 import EsliteHeader from '@/features/layout/components/headers/pages-header-2024.vue';
 import Footer from '@/features/layout/components/footer/footer.vue';
+import { fetchHeaderAdData } from '@/shared/api/ad/home-page-2024-ssr';
+
+// 在伺服器端預取 Header 所需的 API 資料
+const headerInitialData = await fetchHeaderAdData();
 ---
 
 <!doctype html>
@@ -14,9 +18,9 @@ import Footer from '@/features/layout/components/footer/footer.vue';
   </head>
   <body>
     <div class="flex flex-col" style="min-height: 100vh">
-      <EsliteHeader client:load />
+      <EsliteHeader initialData={headerInitialData} />
       <slot />
-      <Footer client:load />
+      <Footer />
     </div>
   </body>
 </html>

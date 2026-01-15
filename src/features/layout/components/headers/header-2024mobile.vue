@@ -14,26 +14,42 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, onUnmounted, onBeforeMount, onMounted } from 'vue';
-import { useHomeAd2024Store } from '@/shared/stores/home-ad-2024';
-import { homePageADTypeEnum } from '@/shared/constants/ad/homepage-ad-type';
+import { ref, computed } from 'vue';
 import HeaderSearchBar from './elements/mobile/header-searchbar.vue';
+import homePageAdFormatter from '@/shared/helpers/ad/home-page-2024-formatter';
+import { homePageADMappingEnumWithNewIndex } from '@/shared/constants/ad/homepage-ad-type';
+import { isFunction } from '@/shared/helpers/data-process';
+
+// 接收從 Astro 傳入的預取資料
+const props = defineProps<{
+  initialData?: Record<string, any> | null;
+}>();
 
 const height = ref(60);
-
-// store
-const homeAdStore = useHomeAd2024Store();
-const { fetchHomeAd } = homeAdStore;
-
 
 // app download
 const showComponent = ref(false);
 
+// 從 initialData 格式化資料的輔助函數
+const getFormattedData = (slotType: string) => {
+  if (!props.initialData?.[slotType]) return null;
+  const data = props.initialData[slotType];
+  const adContent = data?.content || data;
+  const formatter = homePageAdFormatter[`format${homePageADMappingEnumWithNewIndex[slotType]}` as keyof typeof homePageAdFormatter];
+  if (adContent && isFunction(formatter)) {
+    try {
+      return formatter(adContent);
+    } catch {
+      return null;
+    }
+  }
+  return null;
+};
 
-onMounted(() => {
-  // B007, B002, A001
-  fetchHomeAd([homePageADTypeEnum.bigSlide, homePageADTypeEnum.logo, homePageADTypeEnum.eightLinks]);
-});
+// 直接從 initialData 讀取資料（SSR 時可用）
+const bigSlide = computed(() => getFormattedData('B007') || {});
+const logo = computed(() => getFormattedData('B002') || {});
+const eightLinks = computed(() => getFormattedData('A001') || {});
 
 </script>
 

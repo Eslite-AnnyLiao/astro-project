@@ -1,10 +1,10 @@
 <template>
   <div>
-    <eslite-header :is-for-pages="true" />
+    <eslite-header :is-for-pages="true" :initial-data="initialData" />
     <ul class="category-nav ec-container p-0 flex">
       <li class="z-20">
         <button type="button" class="border-none">全站分類</button>
-        <MenuComponent :rwd-mode="true" class="submenu" />
+        <MenuComponent :rwd-mode="true" :initial-data="initialData" class="submenu" />
       </li>
       <li v-for="item in navTabs" :key="`pages-header-nav-${item.alt}`" class="nav-links">
         <router-link-usage :link="item.link" :title="item.alt">{{ item.alt }}</router-link-usage>
@@ -20,57 +20,41 @@ export default {
 </script>
 
 <script setup lang="ts">
-import { computed, onMounted } from 'vue';
-import { storeToRefs } from 'pinia';
+import { computed } from 'vue';
 import MenuComponent from './elements/menu-component.vue';
 import EsliteHeader from './header-2024index.vue';
 import RouterLinkUsage from '@/shared/components/link/router-link-usage.vue';
-import { homePageADTypeEnum } from '@/shared/constants/ad/homepage-ad-type';
-import { useHomeAd2024Store } from '@/shared/stores/home-ad-2024';
+import homePageAdFormatter from '@/shared/helpers/ad/home-page-2024-formatter';
+import { homePageADMappingEnumWithNewIndex } from '@/shared/constants/ad/homepage-ad-type';
+import { isFunction } from '@/shared/helpers/data-process';
 
-const homeAdStore = useHomeAd2024Store();
-const { fetchHomeAd } = homeAdStore;
-const { getTopBanner, getHeaderSmallBanner, getSearchKeywords, getBigSlideTabs, getMenu } = storeToRefs(homeAdStore);
+// 接收從 Astro 傳入的預取資料
+const props = defineProps<{
+  initialData?: Record<string, any> | null;
+}>();
 
-/**
- * top banner
- * @const {computed({})} topBannrImageSource 置頂 banner data
- */
-const topBannrImageSource = computed(() => getTopBanner.value);
-
-/**
- * header small banner
- * @const {computed({})} smallBannrImageSource header small banner data
- */
-const smallBannrImageSource = computed(() => getHeaderSmallBanner.value);
-
-const searchKeywords = computed(() => getSearchKeywords.value?.items || []);
-
-const navTabs = computed(() => getBigSlideTabs.value?.items || []);
-const menuData = computed(() => getMenu.value?.items || []);
-
-onMounted(async () => {
-  const defaultFace = [];
-
-  if (Object.keys(topBannrImageSource.value).length === 0) {
-    defaultFace.push(homePageADTypeEnum.topBanner);
+// 從 initialData 格式化資料的輔助函數
+const getFormattedData = (slotType: string) => {
+  if (!props.initialData?.[slotType]) return null;
+  const data = props.initialData[slotType];
+  const adContent = data?.content || data;
+  const formatter = homePageAdFormatter[`format${homePageADMappingEnumWithNewIndex[slotType]}` as keyof typeof homePageAdFormatter];
+  if (adContent && isFunction(formatter)) {
+    try {
+      return formatter(adContent);
+    } catch {
+      return null;
+    }
   }
-  if (searchKeywords.value.length === 0) {
-    defaultFace.push(homePageADTypeEnum.searchKeywords);
-  }
-  if (Object.keys(smallBannrImageSource.value).length === 0) {
-    defaultFace.push(homePageADTypeEnum.headerSmallBanner);
-  }
-  if (menuData.value.length === 0) {
-    defaultFace.push(homePageADTypeEnum.menu);
-  }
-  if (navTabs.value.length === 0) {
-    defaultFace.push(homePageADTypeEnum.bigSlideTabs);
-  }
-  if (defaultFace.length === 0) return false;
-  await fetchHomeAd(defaultFace);
-  return true;
-});
+  return null;
+};
+
+// 直接從 initialData 讀取資料（SSR 時可用）
+const topBannrImageSource = computed(() => getFormattedData('B001') || {});
+const smallBannrImageSource = computed(() => getFormattedData('B004') || {});
+const searchKeywords = computed(() => getFormattedData('B003')?.items || []);
+const navTabs = computed(() => getFormattedData('B005')?.items || []);
+const menuData = computed(() => getFormattedData('B006')?.items || []);
 </script>
 
 <style scoped>

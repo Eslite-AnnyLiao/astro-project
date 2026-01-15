@@ -65,7 +65,7 @@
             :title="getLogo.alt || '誠品線上'"
             data-test-id="header-logo"
           >
-            <img v-if="!$isEmpty(getLogo.image)" class="logo w-full" :src="getLogo.image" />
+            <img v-if="getLogo.image" class="logo w-full" :src="getLogo.image" />
             <div v-else class="logo w-full">
               <div class="loading logo-loading mode-122x32 rounded-lg"></div>
             </div>
@@ -75,7 +75,7 @@
         <!-- header: search bar & keywordList -->
         <div class="center">
           <HeaderSearchBar />
-          <KeywordsComponent :sticky="scrollMode" />
+          <KeywordsComponent :sticky="scrollMode" :initial-data="initialData" />
         </div>
         <!-- header: small banner -->
         <div class="right links flex justify-between">
@@ -103,40 +103,47 @@ export default {
 };
 </script>
 <script setup lang="ts">
-import { ref, toRefs, computed, onUnmounted, onBeforeMount, onMounted } from 'vue';
-import { storeToRefs } from 'pinia';
-import { useHomeAd2024Store } from '@/shared/stores/home-ad-2024';
+import { ref, toRefs, computed } from 'vue';
 
 import RouterLinkUsage from '@/shared/components/link/router-link-usage.vue';
 import HeaderLinks from './elements/header-links.vue';
 import KeywordsComponent from './elements/keywords-component.vue';
 import HeaderSearchBar from './elements/header-search-bar.vue';
-
-import { homePageADTypeEnum } from '@/shared/constants/ad/homepage-ad-type';
+import homePageAdFormatter from '@/shared/helpers/ad/home-page-2024-formatter';
+import { homePageADMappingEnumWithNewIndex } from '@/shared/constants/ad/homepage-ad-type';
+import { isFunction } from '@/shared/helpers/data-process';
 
 const props = defineProps({
   scrollMode: { type: Boolean, default: false },
   isForPages: { type: Boolean, default: false },
+  initialData: { type: Object, default: null },
 });
 const { scrollMode, isForPages } = toRefs(props);
 
-const isLoaded = ref(false);
+const isLoaded = ref(true);
 const headerFixedWrapperRef = ref(null);
 
-// store
-const homeAd2024Store = useHomeAd2024Store();
-const { fetchHomeAd: fetchHomeAd2024 } = homeAd2024Store;
-const { getLogo, getTopBanner, getHeaderSmallBanner } = storeToRefs(homeAd2024Store);
-const topBannrImageSource = computed(() => getTopBanner.value);
-const smallBannrImageSource = computed(() => getHeaderSmallBanner.value);
-const haveTopBanner = computed(() => !!topBannrImageSource.value?.image);
+// 從 initialData 格式化資料的輔助函數
+const getFormattedData = (slotType: string) => {
+  if (!props.initialData?.[slotType]) return null;
+  const data = props.initialData[slotType];
+  const adContent = data?.content || data;
+  const formatter = homePageAdFormatter[`format${homePageADMappingEnumWithNewIndex[slotType]}` as keyof typeof homePageAdFormatter];
+  if (adContent && isFunction(formatter)) {
+    try {
+      return formatter(adContent);
+    } catch {
+      return null;
+    }
+  }
+  return null;
+};
 
-onBeforeMount(() => {
-  isLoaded.value = true;
-});
-onMounted(async () => {
-  fetchHomeAd2024([homePageADTypeEnum.logo, homePageADTypeEnum.searchKeywords, homePageADTypeEnum.headerSmallBanner]);
-});
+// 直接從 initialData 讀取資料（SSR 時可用）
+const getLogo = computed(() => getFormattedData('B002') || {});
+const topBannrImageSource = computed(() => getFormattedData('B001') || {});
+const smallBannrImageSource = computed(() => getFormattedData('B004') || {});
+const haveTopBanner = computed(() => !!topBannrImageSource.value?.image);
 </script>
 
 <style scoped>

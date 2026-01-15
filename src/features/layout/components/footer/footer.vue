@@ -37,7 +37,7 @@
               <ul class="focus !flex justify-between m-0">
                 <li v-for="item in focus.icons" :key="`focus-icons-${item.id}`" class="last:mr-0">
                   <a :id="item.id" :key="item.id" :href="item.link" target="_blank" rel="noreferrer" :aria-label="item.id" class="no-underline text-gray-800 text-[15px] leading-[1.7rmm]">
-                    <img v-lazy="item.icon" :title="item.name" alt="" src="" class="max-w-12 max-h-12" />
+                    <img :src="item.icon" :title="item.name" alt="" src="" class="max-w-12 max-h-12" />
                   </a>
                 </li>
               </ul>
@@ -72,7 +72,7 @@
               <ul class="app !flex lg:flex-col m-0 mt-2 lg:mt-1">
                 <li v-for="item in app.icons" :key="item.id" class="mb-2 ml-0">
                   <a :id="item.id" :href="item.link" target="_blank" rel="noreferrer" :aria-label="item.id" class="no-underline text-gray-800 text-[15px] leading-[1.7rmm]">
-                    <img v-lazy="item.icon" :title="item.name" alt="" src="" class="max-w-[140px] max-h-[41.5px]" />
+                    <img :src="item.icon" :title="item.name" alt="" src="" class="max-w-[140px] max-h-[41.5px]" />
                   </a>
                 </li>
               </ul>
@@ -87,7 +87,7 @@
                   <a :id="qrCode.icons.id" :href="qrCode.icons.link" target="_blank" rel="noreferrer" :aria-label="qrCode.icons.name" class="no-underline text-gray-800 text-[15px] leading-[1.7rmm]">
                     <div class="ec-row items-center">
                       <div class="qrcode-icon text-[13px] leading-4 ec-col-auto hidden lg:block pr-0">
-                        <img v-lazy="qrCode.icons.icon" :title="qrCode.icons.name" alt="" src="" class="max-w-[70px] max-h-[70px]" />
+                        <img :src="qrCode.icons.icon" :title="qrCode.icons.name" alt="" src="" class="max-w-[70px] max-h-[70px]" />
                       </div>
                       <div class="qrcode-icon ec-col-auto lg:mt-auto font-medium lg:font-normal">
                         <span>{{ qrCode.icons.content.first }}<br class="hidden lg:block" />{{ qrCode.icons.content.last }}</span>
@@ -105,7 +105,7 @@
           <div>統一編號：27952966 | 台灣台北市信義區松德路204號B1 服務電話：0800-666-798／+886-2-8789-8921</div>
           <div>本網站已依台灣網站內容分級規定處理｜建議使用瀏覽器版本：Google Chrome版本60以上 / Firefox版本48以上 / Safari 版本11以上</div>
         </div>
-        <div class="security-icon flex justify-center mt-5 mb-6 lg:mt-10 lg:mb-12" :class="{ 'flex-col': $screen?.isMobileSize, 'items-center': $screen?.isMobileSize }">
+        <div class="security-icon flex justify-center mt-5 mb-6 lg:mt-10 lg:mb-12 flex-col items-center lg:flex-row">
           <div class="passkeyPledge flex items-center mb-4 lg:mb-0 lg:mr-8 lg:w-auto justify-between">
             <a target="_blank" href="https://fidoalliance.org/passkeypledge">
               <img :src="passkeyPledge" alt="passkeyPledge" class="object-contain max-h-9 mr-3 w-[67px] lg:w-auto" />
@@ -147,7 +147,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, getCurrentInstance, computed } from 'vue';
+import { ref, computed } from 'vue';
 import { isEmptyValue } from '@/shared/helpers/data-process';
 import { focus, cooperation, app, qrCode, webMap } from './constant/footer';
 import { appL3, isoIec, isoIec17, passkeyPledge } from '@/shared/constants/images-path';
@@ -172,11 +172,8 @@ const filterFooterItems = (items: (string | FooterItem)[]): FooterItem[] => {
 
 defineOptions({ name: 'FooterRWD' });
 
-// Get global properties
-const instance = getCurrentInstance();
-const $screen = instance?.appContext.config.globalProperties.$screen as { isMobileSize: boolean } | undefined;
-
-const activeSet = ref(new Set<number | string>());
+// SSR: 預設展開所有區塊（爬蟲可見）
+const activeSet = ref(new Set<number | string>([0, 1, 2, 3, 'cooperation']));
 
 // Computed filtered items
 const filteredCooperation = computed(() => filterFooterItems(cooperation));
@@ -186,7 +183,7 @@ const getSectionTitle = (items: (string | FooterItem)[]): string => {
   return items[0] as string;
 };
 
-// methods
+// methods（SSR 時不會執行，但保留以避免模板錯誤）
 const toggleActive = (index: number | string) => {
   activeSet.value[activeSet.value.has(index) ? 'delete' : 'add'](index);
   activeSet.value = new Set(activeSet.value);

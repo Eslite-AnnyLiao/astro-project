@@ -9,32 +9,52 @@
 </template>
 
 <script setup lang="ts">
-import { computed, watch, ref, toRefs, onMounted } from 'vue';
-import { storeToRefs } from 'pinia';
-import { useHomeAd2024Store } from '@/shared/stores/home-ad-2024';
+import { computed, ref, toRefs } from 'vue';
 import RouterLinkUsage from '@/shared/components/link/router-link-usage.vue';
+import homePageAdFormatter from '@/shared/helpers/ad/home-page-2024-formatter';
+import { homePageADMappingEnumWithNewIndex } from '@/shared/constants/ad/homepage-ad-type';
+import { isFunction } from '@/shared/helpers/data-process';
 
 defineOptions({ name: 'KeywordsComponent' });
-const props = defineProps({ sticky: { type: Boolean, default: false } });
+const props = defineProps({
+  sticky: { type: Boolean, default: false },
+  initialData: { type: Object, default: null },
+});
 const { sticky } = toRefs(props);
 const keywordRef = ref(null);
 
-const homeAdStore = useHomeAd2024Store();
-const { getSearchKeywords } = storeToRefs(homeAdStore);
-const list = computed(() => getSearchKeywords.value?.items || []);
+// 從 initialData 格式化資料的輔助函數
+const getFormattedData = (slotType: string) => {
+  if (!props.initialData?.[slotType]) return null;
+  const data = props.initialData[slotType];
+  const adContent = data?.content || data;
+  const formatter = homePageAdFormatter[`format${homePageADMappingEnumWithNewIndex[slotType]}` as keyof typeof homePageAdFormatter];
+  if (adContent && isFunction(formatter)) {
+    try {
+      return formatter(adContent);
+    } catch {
+      return null;
+    }
+  }
+  return null;
+};
 
-/** @const {number} averageCharWidthInPixels 預設每字佔用寬度(px) */
+// 直接從 initialData 讀取資料
+const list = computed(() => getFormattedData('B003')?.items || []);
+
 /** @const {number} containerWidth 外框寬度 */
 const containerWidth = ref(700);
-const rewriteList = ref([]);
 
-// 估算
-function calculateItems() {
+// 在 SSR 時直接計算可顯示的項目
+const rewriteList = computed(() => {
   const avgWidth = { en: 8, cn: 14, padding: 22 };
   const result = list.value.reduce(
-    (acc, item) => {
+    (acc: { count: number; remainingWidth: number }, item: { alt: string }) => {
       if (acc.remainingWidth > 0) {
-        const itemWidth = Array.from(item.alt).reduce((sum, char) => sum + (char.match(/[\u4e00-\u9fa5\u3400-\u4DBF]/) ? avgWidth.cn : avgWidth.en), avgWidth.padding);
+        const itemWidth = Array.from(item.alt).reduce(
+          (sum, char) => sum + (char.match(/[\u4e00-\u9fa5\u3400-\u4DBF]/) ? avgWidth.cn : avgWidth.en),
+          avgWidth.padding
+        );
 
         if (acc.remainingWidth - itemWidth >= 0) {
           acc.remainingWidth -= itemWidth;
@@ -46,15 +66,10 @@ function calculateItems() {
     { count: 0, remainingWidth: containerWidth.value },
   );
 
-  // console.log(`在 ${containerWidth.value}px 寬的外框中，可以完整顯示 ${result.count} 個項目。`);
-  rewriteList.value = list?.value?.filter((val, index) => index < result.count) || [];
-}
+  return list.value.filter((_: any, index: number) => index < result.count) || [];
+});
 
 const hasKeywords = computed(() => rewriteList.value.length > 0);
-
-onMounted(() => {
-  watch(list, calculateItems, { immediate: true });
-});
 </script>
 
 <style scoped>

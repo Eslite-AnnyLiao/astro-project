@@ -91,20 +91,37 @@ export default {
 </script>
 <script setup lang="ts">
 import { ref, computed, toRefs } from 'vue';
-import { storeToRefs } from 'pinia';
-import { useHomeAd2024Store } from '@/shared/stores/home-ad-2024';
 import RouterLinkUsage from '@/shared/components/link/router-link-usage.vue';
 import { getNavLinkPath } from '@/shared/helpers/ad/ad-helper';
+import homePageAdFormatter from '@/shared/helpers/ad/home-page-2024-formatter';
+import { homePageADMappingEnumWithNewIndex } from '@/shared/constants/ad/homepage-ad-type';
+import { isFunction } from '@/shared/helpers/data-process';
 
 const props = defineProps({
   rwdMode: { type: Boolean, default: false },
+  initialData: { type: Object, default: null },
 });
 
 const { rwdMode } = toRefs(props);
 
-const homeAdStore = useHomeAd2024Store();
-const { getMenu } = storeToRefs(homeAdStore);
-const menu = computed(() => getMenu.value?.items || []);
+// 從 initialData 格式化資料的輔助函數
+const getFormattedData = (slotType: string) => {
+  if (!props.initialData?.[slotType]) return null;
+  const data = props.initialData[slotType];
+  const adContent = data?.content || data;
+  const formatter = homePageAdFormatter[`format${homePageADMappingEnumWithNewIndex[slotType]}` as keyof typeof homePageAdFormatter];
+  if (adContent && isFunction(formatter)) {
+    try {
+      return formatter(adContent);
+    } catch {
+      return null;
+    }
+  }
+  return null;
+};
+
+// 直接從 initialData 讀取 menu 資料（SSR 時可用）
+const menu = computed(() => getFormattedData('B006')?.items || []);
 const activeRowIndex = ref<number | null>(null);
 
 const l2Title = ref('推薦品牌');

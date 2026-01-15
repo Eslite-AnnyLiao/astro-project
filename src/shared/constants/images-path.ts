@@ -8,3 +8,17 @@ export const productFail628x418 = '/images/product-fail-628x418.png';
 export const productRestricted628x418 = '/images/product-restricted-628x418.png';
 export const loadingLargeImg = '/images/loading_large.gif';
 export const loadingImg = '/images/loading.gif';
+export const appL3 = '/images/icons/footer/app-l3.webp';
+export const isoIec = '/images/icons/footer/iso-iec.webp';
+export const isoIec17 = '/images/icons/footer/iso-iex-17.webp';
+export const passkeyPledge = '/images/icons/footer/passkey_pledge.webp';
+export const footerFbx2Img = '/images/icons/footer/footer-fb@2x.webp';
+export const footerYoutubex2Img = '/images/icons/footer/footer-youtube@2x.webp';
+export const footerIgx2Img = '/images/icons/footer/footer-ig@2x.webp';
+export const footerApplex2Img = '/images/icons/footer/footer-apple@2x.webp';
+export const footerGplayx2Img = '/images/icons/footer/footer-gplay@2x.webp';
+export const footerQr165Img = '/images/icons/footer/footer-qr165.webp';
+
+export const footerFbsvg = '/images/icons/footer/footer-fb.svg';
+export const footerYtsvg = '/images/icons/footer/footer-yt.svg';
+export const footerIgsvg = '/images/icons/footer/footer-ig.svg';

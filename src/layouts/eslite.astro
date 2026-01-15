@@ -1,0 +1,37 @@
+---
+import EsliteHeader from '@/features/layout/components/headers/pages-header-2024.vue';
+import Footer from '@/features/layout/components/footer/footer.vue';
+import { fetchHeaderAdData } from '@/shared/api/ad/home-page-2024-ssr';
+
+// 在伺服器端預取 Header 所需的 API 資料
+const headerInitialData = await fetchHeaderAdData();
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="generator" content={Astro.generator} />
+    <title>Astro Basics</title>
+  </head>
+  <body>
+    <div class="flex flex-col" style="min-height: 100vh">
+      <EsliteHeader initialData={headerInitialData} />
+      <slot />
+      <Footer />
+    </div>
+  </body>
+</html>
+
+<style is:global>
+  @import '@/assets/style/tailwind.css';
+
+  html,
+  body {
+    margin: 0;
+    width: 100%;
+    height: 100%;
+  }
+</style>

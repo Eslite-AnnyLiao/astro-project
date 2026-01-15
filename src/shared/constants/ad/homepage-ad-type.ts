@@ -269,10 +269,10 @@ export const homePageADMappingEnum = (() => mergeAll(map((x) => zipObj([x.code],
  * 2024 年新首頁廣告映射，將 `code` 映射到 `mappingName` (例如: B001: 'TopBanner')。
  * 僅包含 `mod` 為 'index2024' 的廣告項目。
  */
-export const homePageADMappingEnumWithNewIndex = mergeAll(
+export const homePageADMappingEnumWithNewIndex: Record<string, string> = mergeAll(
   map(
-    (x) => zipObj([x.code], [x.mappingName]),
-    filter((x) => x.mod === 'index2024', homePageAD),
+    (x: (typeof homePageAD)[number]) => zipObj([x.code], [x.mappingName]),
+    filter((x: (typeof homePageAD)[number]) => x.mod === 'index2024', homePageAD),
   ),
 );
 

@@ -15,23 +15,32 @@ import homePageAdFormatter from '@/shared/helpers/ad/home-page-2024-formatter';
 import { homePageADMappingEnumWithNewIndex } from '@/shared/constants/ad/homepage-ad-type';
 import { isFunction } from '@/shared/helpers/data-process';
 
+interface KeywordItem {
+  alt: string;
+  link: string;
+}
+
+interface KeywordsData {
+  items?: KeywordItem[];
+}
+
 defineOptions({ name: 'KeywordsComponent' });
 const props = defineProps({
   sticky: { type: Boolean, default: false },
-  initialData: { type: Object, default: null },
+  initialData: { type: Object as () => Record<string, unknown> | null, default: null },
 });
 const { sticky } = toRefs(props);
-const keywordRef = ref(null);
 
 // 從 initialData 格式化資料的輔助函數
-const getFormattedData = (slotType: string) => {
+const getFormattedData = (slotType: string): KeywordsData | null => {
   if (!props.initialData?.[slotType]) return null;
-  const data = props.initialData[slotType];
-  const adContent = data?.content || data;
-  const formatter = homePageAdFormatter[`format${homePageADMappingEnumWithNewIndex[slotType]}` as keyof typeof homePageAdFormatter];
+  const data = props.initialData[slotType] as Record<string, unknown>;
+  const adContent = (data?.content || data) as Record<string, unknown>;
+  const formatterKey = `format${homePageADMappingEnumWithNewIndex[slotType]}` as keyof typeof homePageAdFormatter;
+  const formatter = homePageAdFormatter[formatterKey];
   if (adContent && isFunction(formatter)) {
     try {
-      return formatter(adContent);
+      return formatter(adContent as never) as KeywordsData;
     } catch {
       return null;
     }
@@ -40,16 +49,16 @@ const getFormattedData = (slotType: string) => {
 };
 
 // 直接從 initialData 讀取資料
-const list = computed(() => getFormattedData('B003')?.items || []);
+const list = computed<KeywordItem[]>(() => getFormattedData('B003')?.items || []);
 
 /** @const {number} containerWidth 外框寬度 */
 const containerWidth = ref(700);
 
 // 在 SSR 時直接計算可顯示的項目
-const rewriteList = computed(() => {
+const rewriteList = computed<KeywordItem[]>(() => {
   const avgWidth = { en: 8, cn: 14, padding: 22 };
   const result = list.value.reduce(
-    (acc: { count: number; remainingWidth: number }, item: { alt: string }) => {
+    (acc: { count: number; remainingWidth: number }, item: KeywordItem) => {
       if (acc.remainingWidth > 0) {
         const itemWidth = Array.from(item.alt).reduce(
           (sum, char) => sum + (char.match(/[\u4e00-\u9fa5\u3400-\u4DBF]/) ? avgWidth.cn : avgWidth.en),
@@ -66,7 +75,7 @@ const rewriteList = computed(() => {
     { count: 0, remainingWidth: containerWidth.value },
   );
 
-  return list.value.filter((_: any, index: number) => index < result.count) || [];
+  return list.value.filter((_, index: number) => index < result.count) || [];
 });
 
 const hasKeywords = computed(() => rewriteList.value.length > 0);

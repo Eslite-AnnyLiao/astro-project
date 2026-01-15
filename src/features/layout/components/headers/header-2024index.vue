@@ -103,7 +103,7 @@ export default {
 };
 </script>
 <script setup lang="ts">
-import { ref, toRefs, computed } from 'vue';
+import { computed } from 'vue';
 
 import RouterLinkUsage from '@/shared/components/link/router-link-usage.vue';
 import HeaderLinks from './elements/header-links.vue';
@@ -113,25 +113,28 @@ import homePageAdFormatter from '@/shared/helpers/ad/home-page-2024-formatter';
 import { homePageADMappingEnumWithNewIndex } from '@/shared/constants/ad/homepage-ad-type';
 import { isFunction } from '@/shared/helpers/data-process';
 
+interface AdData {
+  image?: string;
+  link?: string;
+  alt?: string;
+}
+
 const props = defineProps({
   scrollMode: { type: Boolean, default: false },
   isForPages: { type: Boolean, default: false },
-  initialData: { type: Object, default: null },
+  initialData: { type: Object as () => Record<string, unknown> | null, default: null },
 });
-const { scrollMode, isForPages } = toRefs(props);
-
-const isLoaded = ref(true);
-const headerFixedWrapperRef = ref(null);
 
 // 從 initialData 格式化資料的輔助函數
-const getFormattedData = (slotType: string) => {
+const getFormattedData = (slotType: string): AdData | null => {
   if (!props.initialData?.[slotType]) return null;
-  const data = props.initialData[slotType];
-  const adContent = data?.content || data;
-  const formatter = homePageAdFormatter[`format${homePageADMappingEnumWithNewIndex[slotType]}` as keyof typeof homePageAdFormatter];
+  const data = props.initialData[slotType] as Record<string, unknown>;
+  const adContent = (data?.content || data) as Record<string, unknown>;
+  const formatterKey = `format${homePageADMappingEnumWithNewIndex[slotType]}` as keyof typeof homePageAdFormatter;
+  const formatter = homePageAdFormatter[formatterKey];
   if (adContent && isFunction(formatter)) {
     try {
-      return formatter(adContent);
+      return formatter(adContent as never) as AdData;
     } catch {
       return null;
     }
@@ -140,9 +143,9 @@ const getFormattedData = (slotType: string) => {
 };
 
 // 直接從 initialData 讀取資料（SSR 時可用）
-const getLogo = computed(() => getFormattedData('B002') || {});
-const topBannrImageSource = computed(() => getFormattedData('B001') || {});
-const smallBannrImageSource = computed(() => getFormattedData('B004') || {});
+const getLogo = computed<AdData>(() => getFormattedData('B002') || {});
+const topBannrImageSource = computed<AdData>(() => getFormattedData('B001') || {});
+const smallBannrImageSource = computed<AdData>(() => getFormattedData('B004') || {});
 const haveTopBanner = computed(() => !!topBannrImageSource.value?.image);
 </script>
 

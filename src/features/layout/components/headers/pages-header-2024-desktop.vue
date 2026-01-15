@@ -30,18 +30,19 @@ import { isFunction } from '@/shared/helpers/data-process';
 
 // 接收從 Astro 傳入的預取資料
 const props = defineProps<{
-  initialData?: Record<string, any> | null;
+  initialData?: Record<string, unknown> | null;
 }>();
 
 // 從 initialData 格式化資料的輔助函數
-const getFormattedData = (slotType: string) => {
+const getFormattedData = (slotType: string): Record<string, unknown> | null => {
   if (!props.initialData?.[slotType]) return null;
-  const data = props.initialData[slotType];
-  const adContent = data?.content || data;
-  const formatter = homePageAdFormatter[`format${homePageADMappingEnumWithNewIndex[slotType]}` as keyof typeof homePageAdFormatter];
+  const data = props.initialData[slotType] as Record<string, unknown>;
+  const adContent = (data?.content || data) as Record<string, unknown>;
+  const formatterKey = `format${homePageADMappingEnumWithNewIndex[slotType]}` as keyof typeof homePageAdFormatter;
+  const formatter = homePageAdFormatter[formatterKey];
   if (adContent && isFunction(formatter)) {
     try {
-      return formatter(adContent);
+      return formatter(adContent as never) as Record<string, unknown>;
     } catch {
       return null;
     }
@@ -50,11 +51,7 @@ const getFormattedData = (slotType: string) => {
 };
 
 // 直接從 initialData 讀取資料（SSR 時可用）
-const topBannrImageSource = computed(() => getFormattedData('B001') || {});
-const smallBannrImageSource = computed(() => getFormattedData('B004') || {});
-const searchKeywords = computed(() => getFormattedData('B003')?.items || []);
-const navTabs = computed(() => getFormattedData('B005')?.items || []);
-const menuData = computed(() => getFormattedData('B006')?.items || []);
+const navTabs = computed(() => (getFormattedData('B005') as { items?: Array<{ alt: string; link: string }> })?.items || []);
 </script>
 
 <style scoped>

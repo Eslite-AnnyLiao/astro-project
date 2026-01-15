@@ -43,9 +43,9 @@
             </div>
           </div>
 
-          <div v-if="!$isEmpty(row.brands) || !$isEmpty(row.banners)" class="line"></div>
+          <div v-if="!isEmpty(row.brands) || !isEmpty(row.banners)" class="line"></div>
 
-          <div v-if="!$isEmpty(row.brands)" class="ec-row">
+          <div v-if="!isEmpty(row.brands)" class="ec-row">
             <div
               class="L2 pt-6 ec-arrow font-bold after:font-bold after:font-icomoon after:content-['\e980'] after:text-[10px] after:pl-2 after:text-gold-600"
             >
@@ -64,9 +64,9 @@
             </div>
           </div>
 
-          <div v-if="!$isEmpty(row.banners)" class="ec-row">
-            <div class="L2 pt-6">{{ $isEmpty(row.brands) ? l2Title : '' }}</div>
-            <div class="L3 L3-banner" :class="{ 'pt-3': $isEmpty(row.brands) }">
+          <div v-if="!isEmpty(row.banners)" class="ec-row">
+            <div class="L2 pt-6">{{ isEmpty(row.brands) ? l2Title : '' }}</div>
+            <div class="L3 L3-banner" :class="{ 'pt-3': isEmpty(row.brands) }">
               <template v-for="(l3item, l3index) in row.banners" :key="`l3-banner-${l3index}`">
                 <RouterLinkUsage
                   :id="`menu-sb-${rowIndex + 1}-${l3index + 1}`"
@@ -97,22 +97,66 @@ import homePageAdFormatter from '@/shared/helpers/ad/home-page-2024-formatter';
 import { homePageADMappingEnumWithNewIndex } from '@/shared/constants/ad/homepage-ad-type';
 import { isFunction } from '@/shared/helpers/data-process';
 
+// 定義選單項目的介面
+interface MenuLevel3Item {
+  id: string;
+  title: string;
+  link?: string;
+  image?: string;
+  depth: number;
+}
+
+interface MenuLevel2Item {
+  id: string;
+  title: string;
+  link?: string;
+  depth: number;
+  level3s: MenuLevel3Item[];
+}
+
+interface MenuLevel1Item {
+  id: string;
+  title: string;
+  link?: string;
+  depth: number;
+}
+
+interface MenuRowItem {
+  level1s: MenuLevel1Item[];
+  level2s: MenuLevel2Item[];
+  brands?: MenuLevel3Item[];
+  banners?: MenuLevel3Item[];
+}
+
+interface MenuData {
+  items?: MenuRowItem[];
+}
+
 const props = defineProps({
   rwdMode: { type: Boolean, default: false },
-  initialData: { type: Object, default: null },
+  initialData: { type: Object as () => Record<string, unknown> | null, default: null },
 });
 
 const { rwdMode } = toRefs(props);
 
+// 空值檢查輔助函數（取代 $isEmpty）
+const isEmpty = (value: unknown): boolean => {
+  if (value === null || value === undefined) return true;
+  if (Array.isArray(value)) return value.length === 0;
+  if (typeof value === 'object') return Object.keys(value).length === 0;
+  return false;
+};
+
 // 從 initialData 格式化資料的輔助函數
-const getFormattedData = (slotType: string) => {
+const getFormattedData = (slotType: string): MenuData | null => {
   if (!props.initialData?.[slotType]) return null;
-  const data = props.initialData[slotType];
-  const adContent = data?.content || data;
-  const formatter = homePageAdFormatter[`format${homePageADMappingEnumWithNewIndex[slotType]}` as keyof typeof homePageAdFormatter];
+  const data = props.initialData[slotType] as Record<string, unknown>;
+  const adContent = (data?.content || data) as Record<string, unknown>;
+  const formatterKey = `format${homePageADMappingEnumWithNewIndex[slotType]}` as keyof typeof homePageAdFormatter;
+  const formatter = homePageAdFormatter[formatterKey];
   if (adContent && isFunction(formatter)) {
     try {
-      return formatter(adContent);
+      return formatter(adContent as never) as MenuData;
     } catch {
       return null;
     }
@@ -121,7 +165,7 @@ const getFormattedData = (slotType: string) => {
 };
 
 // 直接從 initialData 讀取 menu 資料（SSR 時可用）
-const menu = computed(() => getFormattedData('B006')?.items || []);
+const menu = computed<MenuRowItem[]>(() => getFormattedData('B006')?.items || []);
 const activeRowIndex = ref<number | null>(null);
 
 const l2Title = ref('推薦品牌');
